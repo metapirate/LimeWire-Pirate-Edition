@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="integrated-ui" basedir="." default="compile-src">
+    <property name="limewire.components.home" value="${basedir}/.."/>
+    <import file="../../components/common/generic-build.xml"/>    
+</project>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="gnutella-core" basedir="." default="compile-src">
+    <property name="module" value="gnutella"/> <!-- use -Dmodule=bittorrent to test things in bittorrent -->
+    <property name="default.code.path" value="com/limegroup/${module}"/>   <!-- change from org.limewire -->
+    <import file="../common/generic-build.xml"/>	
+</project>

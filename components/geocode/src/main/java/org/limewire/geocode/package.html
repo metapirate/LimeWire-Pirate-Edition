@@ -1,0 +1,101 @@
+<html>
+	<body>
+
+		<h1>
+			Overview
+		</h1>
+		<p>
+			This package provides access to geographic location information. The
+			primary entry point is {@link Geocoder} and is injected into the
+			core.
+		</p>
+
+		<h1>
+			Implementation
+		</h1>
+		<p>
+			When deployed there is a remote web service that can be accessed via
+			the URL {@link GeocodeSettings.URL}. An optional CGI parameter of
+			<code>
+				ip
+			</code>
+			can given to this URL for testing. If absent it assumes you are
+			asking to geo code the IP address of the referring IP.
+		</p>
+
+		<p>
+			The output of this web service represents a map of key,value pairs.
+			The output grammar is:
+		<table border="0" cellpadding="1" cellspacing="1">
+			<tr>
+				<td>
+					S
+				</td>
+				<td>
+					::=
+				</td>
+				<td>
+					T N Line*
+				</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>
+					T
+				</td>
+				<td>
+					::=
+				</td>
+				<td>
+					<em>String</em>
+				</td>
+				<td>
+					(key-value separator)
+				</td>
+			</tr>
+			<tr>
+				<td>
+					N
+				</td>
+				<td>
+					::=
+				</td>
+				<td>
+					<em>String</em>
+				</td>
+				<td>
+					(entry separator)
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Line
+				</td>
+				<td>
+					::=
+				</td>
+				<td>
+					<em>String</em> T
+					<em>String</em> N
+				</td>
+				<td></td>
+			</tr>
+		</table>
+		an example would be the following
+		<pre>
+'Ip' '\t' '76.8.67.2' '\n'
+'CountryCode' '\t' 'US' '\n'
+'CountryCode3' '\t' 'USA' '\n'
+'CountryName' '\t' 'United' States '\n'
+'Region' '\t' 'NY' '\n'
+'Region2' '\t' 'New' York '\n'
+'City' '\t' 'New' York '\n'
+'PostalCode' '\t' '10004' '\n'
+'Latitude' '\t' '40.6888' '\n'
+'Longitude' '\t' '74.0203' '\n'
+'DmaCode' '\t' '501' '\n'
+'AreaCode' '\t' '212' '\n'			
+			</pre>
+		</p>
+	</body>
+</html>

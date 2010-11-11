@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="generic-multi-build" basedir="." default="compile-src" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+    <import file="ant-macros.xml"/>
+    
+    <property name="excludes" value=""/>
+    <property name="includes" value="*/build.xml"/>
+    
+    <property name="aggregate.jar-jarname" value="aggregate.jar"/>
+    <property name="aggregate.jar-includes" value="*/dist/main/*.jar"/>
+    <property name="aggregate.jar-excludes" value="${excludes}"/>
+    <property name="aggregate.jar-ivyfilepath" value="../../ivy.xml"/>
+    
+    <!-- the locatino that aggregate junit reports are written to. -->
+    <property name="junit.aggregateHome"  value="${basedir}/junit"/>
+    <property name="junit.aggregateHtml"  value="${junit.aggregateHome}/aggregateHtml"/>
+    <property name="junit.aggregateXml"   value="${junit.aggregateHome}/aggregateXml"/>
+    
+    <!-- the location that aggregate clover reports are written to. -->
+    <property name="clover.aggregateHome" value="${basedir}/clover"/>
+    <property name="clover.aggregateDb"   value="${clover.aggregateHome}/clover-aggregate.db"/> 
+    <property name="clover.aggregateHtml" value="${clover.aggregateHome}/clover-aggregateHtml"/> 
+    <property name="clover.aggregateXml"  value="${clover.aggregateHome}/clover-aggregate.xml"/>
+	
+	<property name="cloverdb-excludes" value="${excludes}"/>
+	<property name="cloverdb-includes" value="**/clover/clover.db"/>
+       
+    <!-- the location that clover assumes test sources are located at. 
+         if this needs to be changed, it must be redefined after importing this file. -->
+    <fileset id="clover.testsources" dir="${basedir}" includes="**/src/test/**, **/src/test-common/**"/>
+    
+    <!-- the location where antcontrib is at, for use with the 'if' task. -->
+    <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${limewire.lib.jars.ant}/ant-contrib-1.0b3.jar"/>
+    
+    <!-- must ensure that ivy is loaded. -->
+    <target name="initialize" depends="ivy-load"/>
+	
+	<!-- publish-dependencies makes sure that all required classes are published, reducing the time spent needlessly publishing. -->
+	<target name="publish-dependencies" depends="initialize" unless="ivy.dependencies.published">
+	    <property name="ivy.dependencies.published" value="true"/>
+	    <do.multi-ant target="publish"/>
+	</target>
+	
+	<!-- publishes all dependencies. -->
+	<target name="publish" depends="publish-dependencies"/>
+	
+	<target name="clean" depends="initialize, clean-local-ivy, clean-aggregate-reports">
+		<delete>
+			<fileset dir="${basedir}" includes="**/build/**/*.class"/>
+		</delete>
+		<delete>
+			<fileset dir="${basedir}" includes="**/clover/clover.db"/>
+		</delete>		
+	    <do.multi-ant target="clean"/>
+	</target>
+    
+    <target name="compile" depends="publish-dependencies">
+	    <do.multi-ant target="compile"/>
+	</target>
+	
+	<target name="compile-src" depends="publish-dependencies">
+	    <do.multi-ant target="compile-src"/>
+	</target>
+    
+	<target name="clean-src" depends="initialize">
+	    <do.multi-ant target="clean-src"/>
+	</target>
+	
+	<target name="compile-tests" depends="publish-dependencies">
+	    <do.multi-ant target="compile-tests"/>
+	</target>
+    
+	<target name="clean-tests" depends="initialize">
+	    <do.multi-ant target="clean-tests"/>
+	</target>
+    
+    <target name="test-all" depends="publish-dependencies">
+        <do.multi-ant target="test-all"/>
+	</target>
+	
+    <target name="tests2html" depends="initialize">
+        <do.multi-ant target="tests2html"/>
+	</target>		
+	
+	<target name="aggregate.tests2html" depends="initialize, clean-aggregate-junit">
+	    <mkdir  dir="${junit.aggregateHome}"/>
+	    <mkdir  dir="${junit.aggregateXml}"/>
+	    <mkdir  dir="${junit.aggregateHtml}"/>
+        <junitreport todir="${junit.aggregateXml}">
+        	<fileset dir="${basedir}" excludes="${excludes}" includes="**/testData/xml/TEST-*.xml"/>
+        	<report format="frames" todir="${junit.aggregateHtml}"/>
+       </junitreport>
+	</target>
+        
+    <target name="jar" depends="publish-dependencies">
+        <do.multi-ant target="jar"/> 
+	</target>
+	
+	<target name="aggregate.jar" depends="jar">
+        <ivy:buildlist reference="jar-path" onMissingDescriptor="skip" root="" ivyfilepath="${aggregate.jar-ivyfilepath}" excluderoot="true">
+            <fileset dir="${basedir}" excludes="${aggregate.jar-excludes}" includes="${aggregate.jar-includes}"/>
+        </ivy:buildlist>
+        
+        <delete file="${aggregate.jar-jarname}"/>
+        
+        <for param="jar">
+            <path refid="jar-path"/>
+            <sequential>
+                <jar destfile="${aggregate.jar-jarname}" update="true" filesetmanifest="skip" compress="false" duplicate="fail">
+                    <zipfileset src="@{jar}" excludes="META-INF/**"/>
+                </jar>
+          </sequential>
+        </for>
+	</target>
+    
+    <target name="javadoc" depends="publish-dependencies">
+        <do.multi-ant target="javadoc"/> 
+        <!-- TODO: build one big javadoc. -->
+	</target>
+    
+    <target name="clean-dist" depends="initialize">
+	    <do.multi-ant target="clean-dist"/>
+	</target>
+    
+    <target name="with.clover" depends="clover-guard">
+        <property name="with.clover" value="true"/>
+	</target>
+    
+    <target name="clover2html" depends="initialize, clover-guard">
+        <do.multi-ant target="clover2html"/>
+	</target>
+	
+    <target name="aggregate.clover2html" depends="initialize, clean-aggregate-clover, clover-guard">
+	    <taskdef resource="cloverlib.xml"/>
+	    <mkdir dir="${clover.aggregateHome}"/>
+	    <clover-merge initstring="${clover.aggregateDb}">
+	        <cloverDbSet dir="${basedir}" excludes="${cloverdb-excludes}" includes="${cloverdb-includes}"/>
+	    </clover-merge>
+        <tstamp>
+            <format property="clover.time" pattern="EEE, MMM d, yyyy hh:mm a"/>
+        </tstamp>
+        <clover-report initstring="${clover.aggregateDb}">
+            <current outfile="${clover.aggregateHtml}"
+            		 title="LimeWire - ${clover.time}">
+                <format type="html" filter="log,iflog,assert,main"/>
+                <testsources refid="clover.testsources"/>
+            </current>
+            <current outfile="${clover.aggregateXml}"
+                     title="LimeWire - ${clover.time}">
+				<format type="xml" filter="log,iflog,assert,main"/>
+                <testsources refid="clover.testsources"/>				
+            </current>            
+        </clover-report>	            
+	</target>
+	
+	<target name="clean-local-ivy">
+    	<delete dir="${ivy.cache.resolution}"/>
+		<delete dir="${ivy.local.default.root}"/>
+	</target>
+	
+	<target name="clean-aggregate-junit">	
+	    <delete dir="${junit.aggregateHome}"/>
+	</target>
+	
+	<target name="clean-aggregate-clover">
+	    <delete dir="${clover.aggregateHome}"/>
+    </target>
+    
+    <target name="clean-aggregate-reports" depends="clean-aggregate-junit, clean-aggregate-clover"/>
+    
+	<!-- executes a subant possibly with clover. -->
+	<macrodef name="do.multi-ant">
+	    <attribute name="target"/>
+	    <attribute name="with.clover" default="${with.clover}"/>
+	    <attribute name="basedir" default="${basedir}"/>
+	    <attribute name="excludes" default="${excludes}"/>
+	    <attribute name="includes" default="${includes}"/>
+	    <attribute name="root" default=""/>
+	    <element name="more-elements" optional="true"/>
+	    <sequential>
+	        <if>
+	            <equals arg1="@{with.clover}" arg2="true"/>
+	            <then>	            
+        	        <do.subant dir="@{basedir}" excludes="@{excludes}" includes="@{includes}" root="@{root}" target="@{target}">
+        	            <more-elements/>
+        	            <pre-targets>
+        	                <target name="with.clover"/>
+        	            </pre-targets>
+        	        </do.subant>
+        	    </then>
+        	    <else>
+        	        <do.subant dir="@{basedir}" excludes="@{excludes}" includes="@{includes}" root="@{root}" target="@{target}">
+        	            <more-elements/>
+        	        </do.subant>        	        
+        	    </else>
+            </if>
+	    </sequential>
+    </macrodef>
+    
+</project>

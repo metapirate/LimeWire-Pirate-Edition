@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+  The XSD 1.1 conformance has been validated with those online validators:
+  http://www.w3.org/2001/03/webdata/xsv (XSV 2.5-2 20010502)
+  http://apps.gotdotnet.com/xmltools/xsdvalidator/Default.aspx
+-->
+
+<schema xml:lang="en"
+ xmlns="http://www.w3.org/2001/XMLSchema"
+ xmlns:target="http://www.limewire.com/schemas/story.xsd"
+ targetNamespace="http://www.limewire.com/schemas/story.xsd">
+
+  <element name="stories">
+    <complexType>
+      <!-- <complexContent><restriction base="anyType"> -->
+
+      <sequence>
+        <element name="story" minOccurs="1" maxOccurs="unbounded" type="target:story"/>
+      </sequence>
+
+      <!-- </restriction></complexContent> -->
+    </complexType>
+  </element>
+
+  <complexType name="story">
+    <!-- <complexContent><restriction base="anyType"> -->
+
+    <attribute use="optional" name="title" type="string"/>
+    <attribute use="optional" name="time" type="string"/>
+    <attribute use="optional" name="author" type="string"/>
+    <attribute use="optional" name="department" type="string"/>
+    <attribute use="optional" name="topic" type="string"/>
+    <attribute use="optional" name="section" type="string"/>
+    <attribute use="optional" name="url" type="anyURI"/>
+    <attribute use="optional" name="image" type="anyURI"/>
+    <attribute use="optional" name="comments" type="string"/>
+
+    <!-- needed to reference the associated QueryHit in searches -->
+    <attribute use="optional" name="index" type="int"/>
+
+    <!-- must be last attribute in all supported schemas -->
+    <attribute use="optional" name="action" type="string"/>
+
+    <!-- </restriction></complexContent> -->
+  </complexType>
+
+</schema>

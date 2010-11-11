@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="lw-private-components" basedir="." default="compile">
+   
+	<property name="limewire.home" location="${basedir}/.."/>    
+    <property name="limewire.components.home" value="${basedir}"/>
+    
+    <import file="${limewire.home}/components/common/generic-multi-build.xml"/>
+    
+</project>

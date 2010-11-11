@@ -1,0 +1,121 @@
+<!-- top level ant file -->
+<project name="limewire" default="compile" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+
+    <property name="limewire.home" location="${basedir}"/>
+    <property name="includes" value="*/*/build.xml"/>
+    
+	<property name="cloverdb-excludes" value="private-components/mock-core/clover/**"/>
+	<property name="cloverdb-includes" value="*/*/clover/clover.db"/>
+	
+    <property name="aggregate.jar-jarname" value="LimeWire.jar"/>
+    <property name="aggregate.jar-includes" value="*/*/dist/main/*.jar"/>
+    <property name="aggregate.jar-excludes" value="private-components/mock-core/**"/>
+	
+    <import file="components/common/generic-multi-build.xml"/>
+    
+    <!-- runs all tests except those in gnutella-core. -->
+    <target name="test-fast-tests" depends="publish-dependencies">
+        <do.multi-ant target="test-all" excludes="components/gnutella-core/*"/>
+	</target>
+    
+    <!-- BEGIN GETTEXT TASKS -->
+
+    <property name="translation.cutoff" value="70"/>
+    <property name="gettexttasks.jar" value="${limewire.lib.jars.ant}/gettext-ant-tasks.jar"/>
+
+	<target name="init.gettext" description="Loads the gettext ant tasks">
+    	 <taskdef name="gettext-extract"
+           classname="org.xnap.commons.ant.gettext.GettextExtractKeysTask"
+           classpath="${gettexttasks.jar}"/>
+    	 <taskdef name="gettext-merge"
+           classname="org.xnap.commons.ant.gettext.GettextMergeKeysTask"
+           classpath="${gettexttasks.jar}"/>
+    	 <taskdef name="gettext-dist"
+           classname="org.xnap.commons.ant.gettext.GettextDistTask"
+           classpath="${gettexttasks.jar}"/>
+          <taskdef name="gettext-generate-default"
+    	   classname="org.xnap.commons.ant.gettext.GenerateDefaultBundleTask"
+    	   classpath="${gettexttasks.jar}"/>
+	</target>    
+
+    <target name="lw-gettext-extract"
+             description="Extracts message keys from the source code"
+             depends="init.gettext">
+    	<!-- keywords listed explicitly because trl is not part of the gettext defaults -->
+        <gettext-extract keysFile="limewire.pot"
+             poDirectory="lib/messagebundles" keywords="-ktrc:1c,2
+          -ktrnc:1c,2,3 -ktr -kmarktr -ktrn:1,2 -ktrl:2 -ktrln:2,3 -kmarktrn:1,2 -k">
+          <fileset dir="components">
+	    <patternset id="non.test.sources">
+	      <include name="**/*.java"/>
+	      <exclude name="**/src/test/**"/>
+	      <exclude name="**/src/test-common/**"/>
+	    </patternset>
+	  </fileset>
+          <fileset dir="private-components">
+	    <patternset refid="non.test.sources"/>
+	  </fileset>
+        </gettext-extract>
+    </target>
+
+    <target name="lw-gettext-merge"
+             description="Merge message keys with translations"
+             depends="init.gettext">
+        <gettext-merge keysFile="limewire.pot" poDirectory="lib/messagebundles"/>
+    </target>
+
+    <!-- generate two jars, one with almost complete translations, and a remaining one -->
+    <target name="lw-bundle-messages"
+            description="Rebuilds messages and bundles them"
+            depends="init.gettext">
+
+        <!-- clean up -->
+        <delete dir="lib/messagebundles/org"/>
+    
+        <!-- generate default bundle for complete messages -->
+        <gettext-generate-default targetBundle="org.limewire.i18n.Messages"
+                                  outputDirectory="lib/messagebundles" 
+                                  potfile="lib/messagebundles/limewire.pot"/>
+    
+        <!-- generate complete bundles -->
+        <gettext-dist targetBundle="org.limewire.i18n.Messages"
+                      poDirectory="lib/messagebundles"
+                      outputDirectory="lib/messagebundles"
+                      percentage="${translation.cutoff}"/>
+    
+        <!-- generate the empty en.po file without percentage  -->
+        <gettext-dist targetBundle="org.limewire.i18n.Messages"
+                      outputDirectory="lib/messagebundles">
+            <fileset dir="lib/messagebundles" includes="en.po"/>
+        </gettext-dist>
+        
+        <!-- jar them -->
+        <jar destfile="lib/jars/messages.jar" 
+             basedir="lib/messagebundles"
+             includes="org/**"/>
+            
+        <!-- clean up -->
+        <delete dir="lib/messagebundles/org"/>
+            
+        <!-- generate incomplete ones -->
+        <gettext-dist targetBundle="org.limewire.i18n.Messages"
+                      poDirectory="lib/messagebundles"
+                      outputDirectory="lib/messagebundles"
+                      percentage="${translation.cutoff}"
+                      moreOrLess="less"/>
+    
+        <delete>
+            <fileset dir="lib/messagebundles/org/limewire/i18n/" includes="**/Messages_en*"/>
+        </delete>
+    
+        <!-- jar them -->
+        <jar destfile="lib/jars/compile/messages.jar"
+             basedir="lib/messagebundles"
+             includes="org/**"/>
+        
+        <!-- clean up -->
+        <delete dir="lib/messagebundles/org"/>
+    </target>
+    
+    <!-- END GETTEXT TASKS -->
+</project>

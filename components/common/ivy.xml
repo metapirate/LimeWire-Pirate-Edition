@@ -1,0 +1,27 @@
+<ivy-module version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info organisation="org.limewire" module="common"/>
+    <configurations>
+        <include file="ivy-configs.xml"/>
+    </configurations>
+    <publications>
+        <artifact name="common" conf="master"/>
+        <artifact name="common-test-common" conf="test-common"/>
+    </publications>
+    <dependencies>
+        <dependency org="none" name="commons-logging" rev="${commons-logging.version}" conf="compile,runtime"/>
+        <dependency org="none" name="icu4j" rev="${icu4j.version}" conf="compile,runtime"/>
+        <dependency org="none" name="guice" rev="${guice.version}" conf="compile,runtime"/>
+        <dependency org="none" name="aopalliance" rev="${aopalliance.version}" conf="runtime"/>
+        
+        <dependency org="none" name="tests/junit" rev="${junit.version}" conf="test-common"/>
+        <dependency org="none" name="tests/jmock/cglib-nodep" rev="${cglib-nodep.version}" force="true" conf="test-common"/>
+        <dependency org="none" name="tests/jmock/hamcrest-library" rev="${hamcrest-library.version}" force="true" conf="test-common"/>
+        <dependency org="none" name="tests/jmock/hamcrest-core" rev="${hamcrest-core.version}" force="true" conf="test-common"/>
+        <dependency org="none" name="tests/jmock/jmock" rev="${jmock.version}" conf="test-common"/>
+        <dependency org="none" name="tests/jmock/jmock-junit3" rev="${jmock-junit3.version}" conf="test-common"/>
+        <dependency org="none" name="tests/jmock/jmock-junit4" rev="${jmock-junit4.version}" conf="test-common"/>
+        <dependency org="none" name="tests/jmock/jmock-legacy" rev="${jmock-legacy.version}" conf="test-common"/>
+        <dependency org="none" name="tests/jmock/objenesis" rev="${objensis.version}" conf="test-common"/>
+        <dependency org="none" name="log4j" rev="${log4j.version}" conf="test-common"/>
+    </dependencies>
+</ivy-module>

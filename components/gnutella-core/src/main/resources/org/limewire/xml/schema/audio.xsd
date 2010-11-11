@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<schema xml:lang="en"
+ xmlns="http://www.w3.org/2001/XMLSchema"
+ xmlns:i18n="http://www.limewire.com/schemas/i18n"
+ i18n:locales="http://www.limewire.com/schemas/i18n/audio.locales.xml"
+ targetNamespace="http://www.limewire.com/schemas/audio.xsd">
+
+  <element name="audios" minOccurs="1" maxOccurs="1">
+    <complexType>
+      <element name="audio" minOccurs="1" maxOccurs="unbounded" type="audioType"/>
+    </complexType>
+  </element>
+
+  <complexType name="audioType">
+    <all>
+      <attribute name="title" type="string" width="100"/>
+      <attribute name="artist" type="string" />
+      <attribute name="album" type="string" />
+      <attribute name="genre">
+        <simpleType base="string">
+          <enumeration value="Blues"/>
+          <enumeration value="Classic Rock"/>
+          <enumeration value="Country"/>
+          <enumeration value="Dance"/>
+          <enumeration value="Disco"/>
+          <enumeration value="Funk"/>
+          <enumeration value="Grunge"/>
+          <enumeration value="Hip-Hop"/>
+          <enumeration value="Jazz"/>
+          <enumeration value="Metal"/>
+          <enumeration value="New Age"/>
+          <enumeration value="Oldies"/>
+          <enumeration value="Other"/>
+          <enumeration value="Pop"/> 
+          <enumeration value="R &amp; B"/>
+          <enumeration value="Rap"/>
+          <enumeration value="Reggae"/>
+          <enumeration value="Rock"/>
+          <enumeration value="Techno"/>
+          <enumeration value="Industrial"/>
+          <enumeration value="Alternative"/>
+          <enumeration value="Ska"/>
+          <enumeration value="Death Metal"/>
+          <enumeration value="Pranks"/>
+          <enumeration value="Soundtrack"/>
+          <enumeration value="Euro-Techno"/>
+          <enumeration value="Ambient"/>
+          <enumeration value="Trip-Hop"/>
+          <enumeration value="Vocal"/>
+          <enumeration value="Jazz+Funk"/>
+          <enumeration value="Fusion"/>
+          <enumeration value="Trance"/>
+          <enumeration value="Classical"/>
+          <enumeration value="Instrumental"/>
+          <enumeration value="Acid"/>
+          <enumeration value="House"/>
+          <enumeration value="Game"/>
+          <enumeration value="Sound Clip"/>
+          <enumeration value="Gospel"/>
+          <enumeration value="Noise"/>
+          <enumeration value="AlternRock"/>
+          <enumeration value="Bass"/>
+          <enumeration value="Soul"/>
+          <enumeration value="Punk"/>
+          <enumeration value="Space"/>
+          <enumeration value="Meditative"/>
+          <enumeration value="Instrumental Pop"/>
+          <enumeration value="Instrumental Rock"/>
+          <enumeration value="Ethnic"/>
+          <enumeration value="Gothic"/>
+          <enumeration value="Darkwave"/>
+          <enumeration value="Techno-Industrial"/>
+          <enumeration value="Electronic"/>
+          <enumeration value="Pop-Folk"/>
+          <enumeration value="Eurodance"/>
+          <enumeration value="Dream"/>
+          <enumeration value="Southern Rock"/>
+          <enumeration value="Comedy"/>
+          <enumeration value="Cult"/>
+          <enumeration value="Gangsta"/>
+          <enumeration value="Christian Rap"/>
+          <enumeration value="Pop+Funk"/>
+          <enumeration value="Jungle"/>
+          <enumeration value="Native American"/>
+          <enumeration value="Cabaret"/>
+          <enumeration value="New Wave"/>
+          <enumeration value="Psychadelic"/>
+          <enumeration value="Rave"/>
+          <enumeration value="Showtunes"/>
+          <enumeration value="Trailer"/>
+          <enumeration value="Lo-Fi"/>
+          <enumeration value="Tribal"/>
+          <enumeration value="Acid Punk"/>
+          <enumeration value="Acid Jazz"/>
+          <enumeration value="Polka"/>
+          <enumeration value="Retro"/>
+          <enumeration value="Musical"/>
+          <enumeration value="Rock &amp; Roll"/>
+          <enumeration value="Hard Rock"/>
+          <enumeration value="Folk"/>
+          <enumeration value="Folk-Rock"/>
+          <enumeration value="National Folk"/>
+          <enumeration value="Swing"/>
+          <enumeration value="Fast Fusion"/>
+          <enumeration value="Bebob"/>
+          <enumeration value="Latin"/>
+          <enumeration value="Revival"/>
+          <enumeration value="Celtic"/>
+          <enumeration value="Bluegrass"/>
+          <enumeration value="Avantgarde"/>
+          <enumeration value="Gothic Rock"/>
+          <enumeration value="Progressive Rock"/>
+          <enumeration value="Psychedelic Rock"/>
+          <enumeration value="Symphonic Rock"/>
+          <enumeration value="Slow Rock"/>
+          <enumeration value="Big Band"/>
+          <enumeration value="Chorus"/>
+          <enumeration value="Easy Listening"/>
+          <enumeration value="Acoustic"/>
+          <enumeration value="Humour"/>
+          <enumeration value="Speech"/>
+          <enumeration value="Chanson"/>
+          <enumeration value="Opera"/>
+          <enumeration value="Chamber Music"/>
+          <enumeration value="Sonata"/>
+          <enumeration value="Symphony"/>
+          <enumeration value="Booty Bass"/>
+          <enumeration value="Primus"/> 
+          <enumeration value="Porn Groove"/>
+          <enumeration value="Satire"/>
+          <enumeration value="Slow Jam"/>
+          <enumeration value="Club"/>
+          <enumeration value="Tango"/>
+          <enumeration value="Samba"/>
+          <enumeration value="Folklore"/>
+          <enumeration value="Ballad"/>
+          <enumeration value="Power Ballad"/>
+          <enumeration value="Rhythmic Soul"/>
+          <enumeration value="Freestyle"/>
+          <enumeration value="Duet"/>
+          <enumeration value="Punk Rock"/>
+          <enumeration value="Drum Solo"/>
+          <enumeration value="A capella"/>
+          <enumeration value="Euro-House"/>
+          <enumeration value="Dance Hall"/>
+        </simpleType>
+      </attribute> 
+      <attribute name="licensetype" editable="false" hidden="true">
+        <simpleType base="string">
+          <enumeration name="Creative Commons" value="creativecommons.org/licenses/"/>
+          <enumeration name="Weedshare" value="http://www.shmedlic.com/license/3play.aspx"/>
+        </simpleType>
+      </attribute>
+      <attribute name="track" type="short"/>
+      <attribute name="type">
+        <simpleType base="string">
+          <enumeration value="Song"/>
+          <enumeration value="Speech"/>
+          <enumeration value="Audiobook"/>
+          <enumeration value="Other"/>
+        </simpleType>
+      </attribute>
+      <attribute name="year" type="year" width="20"/>
+      <attribute name="seconds" type="duration" editable="false" width="20"/>
+      <attribute name="language" type="language"/>
+      <attribute name="bitrate" type="short" editable="false" width="51" defaultViz="true"/>
+      <attribute name="comments">
+        <simpleType base="string">
+          <maxInclusive value="100"/> 
+        </simpleType>
+      </attribute>
+      <attribute name="license" type="string"/>
+      <attribute name="action" type="string" hidden="true" invisible="true"/>
+    </all>
+  </complexType>
+
+</schema>

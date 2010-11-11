@@ -1,0 +1,65 @@
+<ivy-module version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info organisation="org.limewire" module="swingui"/>
+    <configurations>
+        <include file="../../components/common/ivy-configs.xml"/>
+    </configurations>
+    <publications>
+        <artifact name="swingui" conf="master"/>
+    </publications>
+    <dependencies>
+        <!-- compile & runtime dependencies. -->
+        <dependency org="org.limewire" name="activation-api" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="friend" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="common" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="io" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="nio" rev="latest.integration" conf="compile,runtime"/> 
+        <dependency org="org.limewire" name="net" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="core-api" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="collection" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="setting" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="core-settings" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="xmpp-api" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="player-api" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="mock-core" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="bittorrent-api" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="geocode" rev="latest.integration" conf="compile,runtime"/>
+
+		<dependency org="none" name="compile/AppleJavaExtensions" rev="${AppleJavaExtensions.version}" conf="compile"/>
+        <dependency org="none" name="fmj" rev="${fmj.version}" conf="compile,runtime"/>
+        <dependency org="none" name="osx/asm" rev="${asm.version}" conf="compile,runtime"/>
+        <dependency org="none" name="osx/cglib" rev="${cglib.version}" conf="compile,runtime"/>
+        <dependency org="none" name="osx/rococoa-core" rev="${rococoa-core.version}" conf="compile,runtime"/>
+        <dependency org="none" name="osx/rococoa-cocoa" rev="${rococoa-cocoa.version}" conf="compile,runtime"/>
+        <dependency org="none" name="osx/slf4j-api" rev="${slf4j-api.version}" conf="compile,runtime"/>
+        <dependency org="none" name="osx/slf4j-jdk14" rev="${slf4j-jdk14.version}" conf="compile,runtime"/>
+		<dependency org="none" name="foxtrot-core" rev="${foxtrot-core.version}" conf="compile,runtime"/>
+		<dependency org="none" name="google-collect" rev="${google-collect.version}" conf="compile,runtime"/>
+        <dependency org="none" name="guice-assistedinject" rev="${guice-assistedinject.version}" conf="compile,runtime"/>
+        <dependency org="none" name="swingx" rev="${swingx.version}" conf="compile,runtime"/>
+        <dependency org="none" name="AppFramework" rev="${AppFramework.version}" conf="compile,runtime"/>
+        <dependency org="none" name="mozswing" rev="${mozswing.version}" conf="compile,runtime"/>
+        <dependency org="none" name="mozdom4java" rev="${mozdom4java.version}" conf="compile,runtime"/>
+        <dependency org="none" name="MozillaInterfaces" rev="${MozillaInterfaces.version}" conf="compile,runtime"/>
+        <dependency org="none" name="MozillaGlue" rev="${MozillaGlue.version}" conf="compile,runtime"/>
+        <dependency org="none" name="jna" rev="${jna.version}" conf="compile,runtime"/>
+        <dependency org="none" name="jdic" rev="${jdic.version}" conf="compile,runtime"/>
+        <dependency org="none" name="gettext-commons" rev="${gettext-commons.version}" conf="compile,runtime"/>
+        <dependency org="none" name="miglayout" rev="${miglayout.version}" conf="compile,runtime"/>
+        <dependency org="none" name="mp3spi" rev="${mp3spi.version}" conf="compile,runtime"/>
+        <dependency org="none" name="jxlayer" rev="${jxlayer.version}" conf="compile,runtime"/>
+        <dependency org="none" name="log4j" rev="${log4j.version}" conf="compile,runtime"/>
+        <dependency org="none" name="commons-logging" rev="${commons-logging.version}" conf="compile,runtime"/>
+        <dependency org="none" name="guice" rev="${guice.version}" conf="compile,runtime"/>
+        <dependency org="none" name="glazedlists" rev="${glazedlists.version}" conf="compile,runtime"/>
+        <dependency org="none" name="httpclient" rev="${httpclient.version}" conf="compile,runtime"/>
+        <dependency org="none" name="TimingFramework" rev="${TimingFramework.version}" conf="compile,runtime"/>
+        <dependency org="none" name="AnimatedTransitions" rev="${AnimatedTransitions.version}" conf="compile,runtime"/>
+                
+        <!-- runtime dependencies. -->
+        <dependency org="none" name="messages" rev="" conf="runtime"/>
+        
+        <!-- test dependencies. -->
+        <dependency org="org.limewire" name="common" rev="latest.integration" conf="test"/>
+        <dependency org="none" name="tests/inspTool" rev="${inspTool.version}" conf="test"/>
+    </dependencies>
+</ivy-module>

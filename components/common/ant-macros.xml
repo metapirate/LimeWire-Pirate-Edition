@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="ant-macros" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<description>
+	    Common macros for use on both multi and single component build scripts.
+	</description>
+	
+	<property name="limewire.home" location="${basedir}/../.."/> 
+	<property file="${limewire.home}/components/common/build.properties"/>
+	
+	<target name="initialize"/> <!-- Must implement an initialize when using these macros! -->
+	
+    <target name="tests-failguard">
+		<fail if="testsfailed" message="One or more tests failed!"/>
+    </target>
+    
+    <!-- Checks to see if clover is installed and sets a property if so -->
+    <target name="clover-check" unless="clover.installed">
+        <available property="clover.installed" classname="com.cenqua.clover.CloverInstr" />
+    </target>
+    
+    <!-- Fails if clover isn't setup. -->
+    <target name="clover-guard" depends="clover-check" unless="clover.installed">
+        <fail message="Clover is not installed, the build cannot continue."/>
+    </target>	
+    
+    <target name="ivy-clean-cache" depends="ivy-load">
+        <ivy:cleancache />                                                              
+    </target>
+    
+    <target name="ivy-graph-report" depends="ivy-load">
+        <ivy:repreport organisation="org.limewire" xsl="true" xslfile="${limewire.lib.jars.ant}/ivy-limewire-dot.xsl" xslext="dot"/>
+    </target>
+    
+    <target name="ivy-load" unless="ivy.loaded">
+        <property name="ivy.loaded" value="true"/>
+    	<taskdef resource="org/apache/ivy/ant/antlib.xml"
+                 uri="antlib:org.apache.ivy.ant"
+                 classpath="${limewire.lib.jars.ant}/ivy-2.0.0.jar"
+        />
+        <ivy:configure file="${limewire.ivy.settings.file}"/>
+    </target>
+    
+    <macrodef name="do.subant" description="calculate dependancies and run an ant task">
+        <attribute name="dir" default="${limewire.home}"/>
+        <attribute name="target"/>
+        <attribute name="includes"/>
+        <attribute name="excludes" default=""/>
+        <attribute name="root" default="${component}"/>
+        <attribute name="ivyfilepath" default="${ivy.buildlist.ivyfilepath}"/>
+        <attribute name="excluderoot" default="true"/>
+        <element name="pre-targets" optional="true"/>
+        <element name="post-targets" optional="true"/>
+        <element name="properties" optional="true"/>
+        <sequential>
+            <ivy:buildlist reference="build-path" onMissingDescriptor="skip" root="@{root}" ivyfilepath="@{ivyfilepath}" excluderoot="@{excluderoot}">
+                <fileset dir="@{dir}" excludes="@{excludes}" includes="@{includes}" />
+            </ivy:buildlist>
+            <subant buildpathref="build-path">
+                <propertyset>
+                    <!-- must pass the ivy.loaded property to subant, otherwise the 
+                         taskdef is loaded multiple times and we run out of PermGen space. -->
+                    <propertyref name="ivy.loaded" /> 
+                    <!-- must pass the ivy.dependencies.published property so subant
+                         to prevent each dependency from publishing *its* dependencies.
+                         we only want the entry-point build.xml file to publish. -->
+                    <propertyref name="ivy.dependencies.published" />
+                </propertyset> 
+                <properties/>                
+                <pre-targets/>
+                <target name="@{target}"/>
+                <post-targets/>
+            </subant>    
+        </sequential>
+    </macrodef>    	    
+    
+</project>
+    

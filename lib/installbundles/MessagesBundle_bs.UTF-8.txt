@@ -1,0 +1,19 @@
+﻿# Note to translators:
+# Do not modify the placement of any word or symbol sequence starting with the dollar sign - '$'
+#
+MUI_TEXT_INSTALLING_SUBTITLE="Najuspješniji program za razmjenu datoteka na planeti"
+MUI_TEXT_FINISH_SUBTITLE="${PRODUCT} ${VERSION} Instaliranje uspješno!"
+MUI_TEXT_FINISH_INFO_TEXT="Hvala vam što ste instalirali ${PRODUCT}. Za update, najbolje da posjetite oficijelni LimeWire vebsajt na linku ispod."
+CLOSE_LIMEWIRE="Izgleda da koristite jednu stariju verziju LimeWire. Morate staru verziju ukloniti prije nego što idete dalje.$\r$\nČim ste uklonili postojeću LimeWire, udarite Iznova.$\r$\n$\r$\n$\r$\n(Napominjem da LimeWire možda okreće u vašem sistemu, Da bi izašli udarite desno dugme na mišu i odaberite $\"Izlaz$\".)"
+MUI_TEXT_WELCOME_INFO_TITLE="Dobro došli na ${PRODUCT}"
+PURCHASING=purchasing
+CHOOSING=izbor
+MUI_TEXT_WELCOME_INFO_TEXT="Hvala vam za $(BOUGHT) ${PRODUCT}, najuspješniji program za razmjenu na planeti. Molim da udarite na Dalje za početak instaliranja."
+MUI_TEXT_FINISH_TITLE="${PRODUCT} Instaliranje uspješno!"
+INSTALLING_JAVA="Molim pričekajte, instalira se Java"
+JAVA_FAILED="LimeWire nije uspio da instalira Javu. Instaliranje$\r$\nće se nastaviti ali LimeWire neće početi dok ne instalirate$\r$\nJava Runtime Environment sa http://www.java.com."
+PREVIOUS_LIME="Uklanjanje prvobitne verzije"
+PRIVILEGES="Vi nemate dovoljno prava da LimeWire instalirate. Molim da ponovo počnete instaliranje ali kao administrator ili vlasnik."
+UNINSTALL_ERROR="LimeWire ne može kreirati informacije za deinstalaciju. Instaliranje će sada da izađe."
+EXIT_JAVA="Vi morate da izađete iz svih momentano uključenih Java programa. Molim da pritisnete Iznova za nastavak nakon izlaza iz ovog programa."
+FINISHING="Završeno instaliranje."

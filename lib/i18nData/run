@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# NOTE;  If you are using cygwin on Windows, the colon below 
+#        should be a semi-colon
+CLASSPATH=".;../jars/collections.jar;../jars/xerces.jar;../jars/MRJToolkitStubs.jar;../jars/logicrypto.jar;../../core"
+export CLASSPATH
+
+
+export CLASSPATH
+PATH=$PATH:../core/bin
+export PATH
+
+java com.limegroup.gnutella.util.UDataFileCreator

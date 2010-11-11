@@ -1,0 +1,38 @@
+<html>
+	<body>
+
+		<h1>
+			Overview
+		</h1>
+		<p>
+			This package provides the implementation of the UI for Jabber-network chat in LimeWire.
+		</p>
+
+		<h1>
+			Implementation
+		</h1>
+		<p>
+			There are a few classes in this package that are notable:
+		</p>
+		<h2>ChatFriendListPane</h2>
+		<p>
+			This is class listens for all additions and departures of friends and displays them and their online/chat states in a specially sorted scrollable list in the UI.  It also listens for friend presences changes as well as message notices coming from online friends.  This class uses both simple (<code>EventSubscriber</code>) subscription as well as runtime topic pattern (<code>RuntimeTopicPatternEventSubscriber</code>) subscription to update itself as messages are received and chat sessions closed.  The friend list is implemented as a JXTable and includes a custom cell renderer that performs highlighting, underlining, or icon flashing depending on friend state and active chat status.
+		</p>
+		<h2>ConversationPane</h2>
+		<p>
+			The ConversationPane class displays the messages from a conversation and responds to mouse-clicks from either hyperlinks included in the conversations messages or file share download requests from files offered during a chat.  This class uses EventBus (runtime) topic subscription to listen to message events specific to a single conversation (the one it is displaying).
+		</p>
+		<h2>ChatDocumentBuilder</h2>
+		<p>
+			This class takes a list of messages (representing all exchanges in a conversation) and builds the HTML document that will be displayed in the <code>ConversationPane</code>.  This class applies rules related to displaying interim status messages (about the other chatter typing, or having left the conversation) or redisplaying the name of the chatter based on whether messages in the conversation have occurred outside of a time window relative to each other. 
+		</p>
+		<h2>MessageFileOfferImpl</h2>
+		<p>
+			The implementation of the <code>Message</code> type representing a file offered during a chat session.  This class does the actual formating of an HTML &lt;form/&gt; element so that a button will appear in the conversation message pane.
+		</p>
+		<h2>URLWrapper</h2>
+		<p>
+			This class is a utility for scanning a text String to detect embedded URLs and wrapping the addresses in HTML hyperlink tags. It uses regular expressions to scan for http(s), ftp, and magnet link text strings pointing to all known international top-level domains (and domain patterns).
+		</p>
+	</body>
+</html>

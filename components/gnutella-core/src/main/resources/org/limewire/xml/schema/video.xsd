@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<schema xml:lang="en"
+ xmlns="http://www.w3.org/2001/XMLSchema"
+ xmlns:i18n="http://www.limewire.com/schemas/i18n"
+ i18n:locales="http://www.limewire.com/schemas/i18n/video.locales.xml"
+ targetNamespace="http://www.limewire.com/schemas/video.xsd">
+
+  <element name="videos">
+    <complexType>
+      <element name="video" minOccurs="1" maxOccurs="unbounded" type="videoType"/>
+    </complexType>
+  </element>
+
+  <complexType name="videoType">
+    <all>
+      <attribute name="title" minOccurs="0" maxOccurs="1" type="string" width="100"/>
+      <attribute name="type" minOccurs="0" maxOccurs="1">
+        <simpleType base="string">
+          <enumeration value="Music Video"/>
+          <enumeration value="Commercial"/>
+          <enumeration value="Trailer"/>
+          <enumeration value="Movie Clip"/>
+          <enumeration value="Video Clip"/>
+          <enumeration value="VHS Movie"/>
+          <enumeration value="DVD Movie"/>
+          <enumeration value="Adult"/>
+          <enumeration value="Other"/>
+        </simpleType>
+      </attribute>
+      <attribute name="year" minOccurs="0" maxOccurs="1" type="year" width="20"/>
+      <attribute name="rating" minOccurs="0" maxOccurs="1" width="5">
+        <simpleType base="string">
+          <enumeration value="G"/><!--General Audience-->
+          <enumeration value="PG"/><!--Parental Guidance suggested, not suitable for children-->
+          <enumeration value="PG-13"/><!--Parents strongly cautioned, inappropriate under 13-->
+          <enumeration value="R"/><!--Restricted, requires accompanying parent-->
+          <enumeration value="NC-17"/><!--No one 17 or under admitted-->
+          <enumeration value="NR"/><!--Not Rated by MPAA-->
+        </simpleType>
+      </attribute>
+      <attribute name="length" minOccurs="0" maxOccurs="1" type="duration" editable="false" width="20"/>
+      <attribute name="comments" minOccurs="0" maxOccurs="1">
+        <simpleType base="string">
+          <maxInclusive value="100"/>
+        </simpleType>
+      </attribute>
+      <attribute name="licensetype" editable="false" hidden="true">
+        <simpleType base="string">
+          <enumeration name="Creative Commons" value="creativecommons.org/licenses/"/>
+          <enumeration name="Weedshare" value="http://www.shmedlic.com/license/3play.aspx"/>
+        </simpleType>
+      </attribute>
+      <attribute name="license" type="string"/>
+      <attribute name="height" minOccurs="0" maxOccurs="1" type="int" editable="false"/>
+      <attribute name="width" minOccurs="0" maxOccurs="1" type="int" editable="false"/>
+      <attribute name="bitrate" type="short" editable="false"/>
+      <attribute name="action" minOccurs="0" maxOccurs="0" type="string" hidden="true" invisible="true"/>
+      <attribute name="director" minOccurs="0" maxOccurs="1" type="string" />
+      <attribute name="studio" minOccurs="0" maxOccurs="1" type="string" />
+      <attribute name="language" minOccurs="0" maxOccurs="1" type="string"/>
+      <attribute name="stars" minOccurs="0" maxOccurs="3" type="string" />
+      <attribute name="producer" minOccurs="0" maxOccurs="2" type="string" />
+      <attribute name="subtitles" minOccurs="0" maxOccurs="3" type="string" width="5"/>
+    </all>
+  </complexType>
+
+</schema>

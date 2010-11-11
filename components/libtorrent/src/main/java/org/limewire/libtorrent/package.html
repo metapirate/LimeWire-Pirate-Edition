@@ -1,0 +1,31 @@
+<html>
+<body>
+One of the more complicated things happening in this component is mixed
+memory management between java (through jna) and c. Whenever we return
+an item from c, depending on how it has been allocated we need to call a
+corresponding free() method for that object to free up the memory in c.
+<p>There are a couple of scenarios we are dealing with.
+<ol>
+	<li>The memory is completely allocated in c code, but is returned
+	through a method.</li>
+	<p>After the object gets into java and is read, it is effectively
+	copied, so we can call free on the object right away without any ill
+	effects, so long as we don't need to use that object in the c code
+	again.</p>
+	<li>The memory is completely allocated in c code, but calls a java
+	callback with then returns to the c code after the callback finishes.</li>
+	<p>In this instance the object is copied into java as a part of the
+	callback, but then the object returns to the c code, in these cases we
+	have been freeing the memory using delete directly after the callback.</p>
+	<li>The memory for a struct is allocated in java, the struct is
+	passed by reference to the c code as part of a method call. In this
+	method more memory is allocated and pointers are filled in in the
+	struct. Under this circumstance the memory is mixed, because structs
+	created via jna are freed when the java object representing them is
+	garbage collected. It cannot know how to free the internal pointers
+	however. So we additionally will call free on the object after the
+	fields have been read.</li>
+</ol>
+</p>
+</body>
+</html>

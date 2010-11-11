@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+  The XSD 1.1 conformance has been validated with those online validators:
+  http://www.w3.org/2001/03/webdata/xsv (XSV 2.5-2 20010502)
+  http://apps.gotdotnet.com/xmltools/xsdvalidator/Default.aspx
+-->
+
+<schema xml:lang="en"
+ xmlns="http://www.w3.org/2001/XMLSchema"
+ xmlns:target="http://www.limewire.com/schemas/property.xsd"
+ targetNamespace="http://www.limewire.com/schemas/property.xsd">
+
+  <element name="properties">
+    <complexType>
+      <!-- <complexContent><restriction base="anyType"> -->
+
+      <sequence>
+        <element name="property" minOccurs="1" maxOccurs="unbounded" type="target:property"/>
+      </sequence>
+
+      <!-- </restriction></complexContent> -->
+    </complexType>
+  </element>
+
+  <complexType name="property">
+    <!-- <complexContent><restriction base="anyType"> -->
+
+    <attribute use="optional" name="property_title" type="string"/>
+
+    <attribute use="optional" name="property_type" type="string"/>
+    <attribute use="optional" name="sub_property_type" type="string"/>
+    <attribute use="optional" name="type" type="string"/>
+    <attribute use="optional" name="sub_type" type="string"/>
+
+    <attribute use="optional" name="description" type="string"/>
+    <attribute use="optional" name="description_url" type="string"/>
+
+    <attribute use="optional" name="stories" type="string"/>
+
+    <attribute use="optional" name="size_MAX" type="decimal"/>
+    <attribute use="optional" name="size_MIN" type="decimal"/>
+    <attribute use="optional" name="size" type="decimal"/>
+    <attribute use="optional" name="size_type" type="string"/>
+    <attribute use="optional" name="units" type="decimal"/>
+
+    <attribute use="optional" name="price_MAX" type="decimal"/>
+    <attribute use="optional" name="price_MIN" type="decimal"/>
+    <attribute use="optional" name="price" type="decimal"/>
+    <attribute use="optional" name="cap_rate" type="decimal"/>
+    <attribute use="optional" name="psfannual" type="decimal"/>
+    <attribute use="optional" name="psfmonthly" type="decimal"/>
+
+    <attribute use="optional" name="date_listed" type="string"/>
+    <attribute use="optional" name="modified" type="string"/>
+
+    <attribute use="optional" name="rooms" type="decimal"/>
+    <attribute use="optional" name="bedrooms" type="decimal"/>
+    <attribute use="optional" name="bathrooms" type="decimal"/>
+    <attribute use="optional" name="built_renovated" type="decimal"/>
+
+    <attribute use="optional" name="major_tenants" type="string"/>
+    <attribute use="optional" name="metroarea" type="string"/>
+    <attribute use="optional" name="submarket_district" type="string"/>
+    <attribute use="optional" name="region" type="string"/>
+    <attribute use="optional" name="region_type" type="string"/>
+
+    <attribute use="optional" name="owner_name" type="string"/>
+    <attribute use="optional" name="company_name" type="string"/>
+    <attribute use="optional" name="seller" type="string"/>
+    <attribute use="optional" name="broker_name" type="string"/>
+    <attribute use="optional" name="record_id" type="string"/>
+    <attribute use="optional" name="phone" type="string"/>
+    <attribute use="optional" name="fax" type="string"/>
+    <attribute use="optional" name="email" type="string"/>
+    <attribute use="optional" name="site" type="string"/>
+    <attribute use="optional" name="site_url" type="string"/>
+    <attribute use="optional" name="site_id" type="string"/>
+
+    <attribute use="optional" name="complete_location" type="string"/>
+    <attribute use="optional" name="location_street" type="string"/>
+    <attribute use="optional" name="street_address" type="string"/>
+    <attribute use="optional" name="county" type="string"/>
+    <attribute use="optional" name="city" type="string"/>
+    <attribute use="optional" name="zip" type="string"/>
+    <attribute use="optional" name="state" type="string"/>
+    <attribute use="optional" name="country" type="string"/>
+
+    <!-- needed to reference the associated QueryHit in searches -->
+    <attribute use="optional" name="index" type="int"/>
+
+    <!-- must be last attribute in all supported schemas -->
+    <attribute use="optional" name="action" type="string"/>
+
+    <!-- </restriction></complexContent> -->
+  </complexType>
+
+</schema>

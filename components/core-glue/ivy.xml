@@ -1,0 +1,60 @@
+<ivy-module version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info organisation="org.limewire" module="core-glue"/>
+    <configurations>
+        <include file="../common/ivy-configs.xml"/>
+    </configurations>
+    <publications>
+        <artifact name="core-glue" conf="master"/>
+        <artifact name="core-glue-test-common" conf="test-common"/>
+    </publications>
+    <dependencies>
+        <dependency org="org.limewire" name="activation-api" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="activation" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="friend" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="common" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="collection" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="gnutella-core" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="core-api" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="player-api" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="player" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="xmpp-api" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="xmpp" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="http" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="io" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="nio" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="net" rev="latest.integration" conf="compile,runtime"/>
+		<dependency org="org.limewire" name="rest" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="rudp" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="security" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="mojito" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="setting" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="core-settings" rev="latest.integration" conf="compile,runtime"/>
+        <dependency org="org.limewire" name="geocode" rev="latest.integration" conf="compile,runtime"/>
+		<dependency org="org.limewire" name="bittorrent-api" rev="latest.integration" conf="compile,runtime"/>
+		<dependency org="org.limewire" name="libtorrent" rev="latest.integration" conf="compile,runtime"/>
+
+		<dependency org="none" name="google-collect" rev="${google-collect.version}" conf="compile,runtime"/>        
+        <dependency org="none" name="glazedlists" rev="${glazedlists.version}" conf="compile,runtime"/>
+        <dependency org="none" name="MozillaInterfaces" rev="${MozillaInterfaces.version}" conf="compile,runtime"/>
+        <dependency org="none" name="mozswing" rev="${mozswing.version}" conf="compile,runtime"/>
+        <dependency org="none" name="MozillaGlue" rev="${MozillaGlue.version}" conf="compile,runtime"/>
+        <dependency org="none" name="windows/jacob" rev="${jacob.version}" conf="compile,runtime"/> <!-- todo: scope to windows only -->
+        <dependency org="none" name="windows/iTunes" rev="${iTunes.version}" conf="compile,runtime"/> <!-- todo: scope to windows only -->
+        <dependency org="none" name="commons-logging" rev="${commons-logging.version}" conf="compile,runtime"/>
+        <dependency org="none" name="guice" rev="${guice.version}" conf="compile,runtime"/>
+        <dependency org="none" name="guice-assistedinject" rev="${guice-assistedinject.version}" conf="compile,runtime"/>
+        <dependency org="none" name="httpcore" rev="${httpcore.version}" conf="compile,runtime"/>
+        <dependency org="none" name="httpcore-nio" rev="${httpcore-nio.version}" conf="compile,runtime"/>
+        <dependency org="none" name="httpclient" rev="${httpclient.version}" conf="compile,runtime"/>
+        <dependency org="none" name="commons-codec" rev="${commons-codec.version}" conf="compile,runtime"/>
+        <dependency org="none" name="jcip-annotations" rev="${jcip-annotations.version}" conf="compile,runtime"/>
+        <dependency org="none" name="json" rev="${json.version}" conf="compile,runtime"/>       
+	    <dependency org="none" name="htmlcleaner" rev="${htmlcleaner.version}" conf="compile,runtime"/>
+
+        <dependency org="none" name="tests/org.mortbay.jetty" rev="${org.mortbay.jetty.version}" conf="test"/>
+        <dependency org="none" name="tests/javax.servlet" rev="${javax.servlet.version}" conf="test"/>
+        <dependency org="org.limewire" name="common" rev="latest.integration" conf="test"/>
+        <dependency org="org.limewire" name="gnutella-core" rev="latest.integration" conf="test-common,test"/>
+        <dependency org="org.limewire" name="io" rev="latest.integration" conf="test"/>
+    </dependencies>
+</ivy-module>

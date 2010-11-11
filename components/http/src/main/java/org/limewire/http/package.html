@@ -1,0 +1,46 @@
+<html>
+<head>
+</head>
+<body>
+Provides classes for using the <a href="
+http://jakarta.apache.org/httpcomponents/httpcore/index.html">Apache
+HttpCore</a> <a href="
+http://jakarta.apache.org/httpcomponents/httpcore/jakarta-httpcore-nio/index.html">NIO
+extensions</a> with LimeWire's NIO component. This packages can be used to
+implement NIO based HTTP servers.
+<p>
+The architecture is composed of multiple layers that communicate
+through interfaces. The table below shows the classes that compose the
+protocol stack:
+<pre>
+  Interface                       Implementation
+ ==============================================================
+  HttpNIOEntity*                | AbstractHttpNIOEntity*
+ ------------------------------ -------------------------------
+  ContentEncoder                | AbstractContentEncoder    
+ ------------------------------ -------------------------------
+  NHttpServiceHandler           | HttpServiceHandler*
+ ------------------------------ -------------------------------
+  NHttpServerConnection         | DefaultNServerConnection
+ ------------------------------ -------------------------------
+  IOEventDispatch               | DefaultServerIOEventDispatch
+ ------------------------------ -------------------------------
+  ByteChannel                   | HttpChannel*                  
+
+* Classes provided by this component. Other classes except for
+ByteChannel are part of HttpCore.
+</pre>
+<p>
+HttpChannel implements <code>ChannelReadObserver</code> and
+<code>ChannelWriter</code> which hook into LimeWire's NIO
+component. The <code>HttpNIOEntity</code> interface extends the stream
+based <code>HttpEntity</code> interface with an event based NIO
+implementation that is supported by <code>HttpServiceHandler</code>.
+<p>
+The <code>HttpIOSession</code> class is provided for controlling the
+underlying socket and throttling.
+<p>
+Connection are established and intitilized <code>HttpIOReactor</code>
+which implements the <code>ConnectingIOReactor</code> interface.
+</body>
+</html>

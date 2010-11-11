@@ -1,0 +1,18 @@
+<ivy-module version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info organisation="org.limewire" module="io"/>
+    <configurations>
+        <include file="../common/ivy-configs.xml"/>
+    </configurations>
+    <publications>
+        <artifact name="io" conf="master"/>
+        <artifact name="io-test-common" conf="test-common"/>
+    </publications>
+    <dependencies>
+        <dependency org="org.limewire" name="common" rev="latest.integration" conf="compile,runtime"/>
+        
+        <dependency org="none" name="commons-logging" rev="${commons-logging.version}" conf="compile,runtime"/>
+        <dependency org="none" name="guice" rev="${guice.version}" conf="compile,runtime"/>
+        
+        <dependency org="org.limewire" name="common" rev="latest.integration" conf="test"/>
+    </dependencies>
+</ivy-module>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+  The XSD 1.1 conformance has been validated with those online validators:
+  http://www.w3.org/2001/03/webdata/xsv (XSV 2.5-2 20010502)
+  http://apps.gotdotnet.com/xmltools/xsdvalidator/Default.aspx
+-->
+
+<schema xml:lang="en"
+ xmlns="http://www.w3.org/2001/XMLSchema"
+ xmlns:target="http://www.limewire.com/schemas/book.xsd"
+ targetNamespace="http://www.limewire.com/schemas/book.xsd">
+
+  <element name="books">
+    <complexType>
+      <!-- <complexContent><restriction base="anyType"> -->
+
+      <sequence>
+        <element name="book"  minOccurs="1" maxOccurs="unbounded" type="target:book"/>
+      </sequence>
+
+      <!-- </restriction></complexContent> -->
+    </complexType>
+  </element>
+
+  <complexType name="book">
+    <!-- <complexContent><restriction base="anyType"> -->
+
+    <attribute use="optional" name="title" type="string"/>
+    <attribute use="optional" name="edition" type="short"/>
+    <attribute use="optional" name="author" type="string"/>
+    <attribute use="optional" name="publisher" type="string"/>
+    <attribute use="optional" name="genre">
+      <simpleType>
+        <restriction base="string">
+          <enumeration value="News and Information"/>
+          <enumeration value="Science"/>
+          <enumeration value="Technology"/>
+          <enumeration value="Computers"/>
+          <enumeration value="Arts and Recreation"/>
+          <enumeration value="Photography"/>
+          <enumeration value="Tourism"/>
+          <enumeration value="History and Geography"/>
+          <enumeration value="Economy"/>
+          <enumeration value="Reference"/>
+          <enumeration value="Language"/>
+          <enumeration value="Dictionnary"/>
+          <enumeration value="Social Sciences"/>
+          <enumeration value="Philosophy and Psychology"/>
+          <enumeration value="Religion"/>
+          <enumeration value="General Fiction"/>
+          <enumeration value="Classics"/>
+          <enumeration value="Poetry"/>
+          <enumeration value="Crime"/>
+          <enumeration value="Children and Teens"/>
+          <enumeration value="Science Fiction"/>
+          <enumeration value="Adult"/>
+          <enumeration value="Other"/>
+        </restriction>
+      </simpleType>
+    </attribute>
+    <attribute use="optional" name="subject" type="string"/>
+    <attribute use="optional" name="pages" type="int"/>
+    <attribute use="optional" name="year" type="gYear"/>
+    <attribute use="optional" name="language" type="language"/>
+    <attribute use="optional" name="SHA1" type="int"/>
+    <attribute use="optional" name="ISBN">
+      <simpleType>
+        <restriction base="int">
+          <pattern value="\d{10}"/>
+        </restriction>
+      </simpleType>
+    </attribute>
+    <attribute use="optional" name="back">
+      <simpleType base="string">
+        <enumeration value="Hardback"/>
+        <enumeration value="Paperback"/>
+      </simpleType>
+    </attribute>
+    <attribute use="optional" name="availability" type="string"/>
+    <attribute use="optional" name="price" type="string"/>
+    <attribute use="optional" name="shipping" type="string"/>
+    <attribute use="optional" name="link" type="anyURI"/>
+    <attribute use="optional" name="comments">
+      <simpleType base="string">
+        <maxInclusive value="100"/>
+      </simpleType>
+    </attribute>
+
+    <!-- needed to reference the associated QueryHit in searches -->
+    <attribute use="optional" name="index" type="int"/>
+
+    <!-- must be last attribute in all supported schemas -->
+    <attribute use="optional" name="action" type="string"/>
+
+    <!-- </restriction></complexContent> -->
+  </complexType>
+
+</schema>

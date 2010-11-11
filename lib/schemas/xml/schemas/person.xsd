@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+  The XSD 1.1 conformance has been validated with those online validators:
+  http://www.w3.org/2001/03/webdata/xsv (XSV 2.5-2 20010502)
+  http://apps.gotdotnet.com/xmltools/xsdvalidator/Default.aspx
+-->
+
+<schema xml:lang="en"
+ xmlns="http://www.w3.org/2001/XMLSchema"
+ xmlns:target="http://www.limewire.com/schemas/person.xsd"
+ targetNamespace="http://www.limewire.com/schemas/person.xsd">
+
+  <element name="persons">
+    <complexType>
+      <!-- <complexContent><restriction base="anyType"> -->
+
+      <sequence>
+        <element name="person" minOccurs="1" maxOccurs="unbounded" type="target:person"/>
+      </sequence>
+
+      <!-- </restriction></complexContent> -->
+    </complexType>
+  </element> 
+
+  <complexType name="person">
+    <!-- <complexContent><restriction base="anyType"> -->
+
+    <attribute use="optional" name="subname" type="string"/>
+    <attribute use="optional" name="name" type="string"/>
+    <attribute use="optional" name="email" type="string"/>
+    <attribute use="optional" name="language" type="language"/>
+    <attribute use="optional" name="title">
+      <simpleType>
+        <restriction base="string">
+          <enumeration value="Ms."/>
+          <enumeration value="Mrs."/>
+          <enumeration value="Mr."/>
+          <enumeration value="Dr."/>
+        </restriction>
+      </simpleType>
+    </attribute>
+    <attribute use="optional" name="country" type="string"/>
+    <attribute use="optional" name="state" type="string"/>
+    <attribute use="optional" name="city" type="string"/>
+    <attribute use="optional" name="school" type="language"/>
+    <attribute use="optional" name="job" type="language"/>
+    <attribute use="optional" name="company" type="language"/>
+    <attribute use="optional" name="yearBirthday" type="gYear"/>
+    <attribute use="optional" name="mounthBirthday">
+      <simpleType>
+        <restriction base="gMonth">
+          <enumeration value="January"/>
+          <enumeration value="Febuary"/>
+          <enumeration value="March"/>
+          <enumeration value="April"/>
+          <enumeration value="May"/>
+          <enumeration value="June"/>
+          <enumeration value="July"/>
+          <enumeration value="August"/>
+          <enumeration value="September"/>
+          <enumeration value="October"/>
+          <enumeration value="November"/>
+          <enumeration value="December"/>
+        </restriction>
+      </simpleType>
+    </attribute>
+    <attribute use="optional" name="dayBirthday">
+      <simpleType>
+        <restriction base="gDay">
+          <enumeration value="1"/>
+          <enumeration value="2"/>
+          <enumeration value="3"/>
+          <enumeration value="4"/>
+          <enumeration value="5"/>
+          <enumeration value="6"/>
+          <enumeration value="7"/>
+          <enumeration value="8"/>
+          <enumeration value="9"/>
+          <enumeration value="10"/>
+          <enumeration value="11"/>
+          <enumeration value="12"/>
+          <enumeration value="13"/>
+          <enumeration value="14"/>
+          <enumeration value="15"/>
+          <enumeration value="16"/>
+          <enumeration value="17"/>
+          <enumeration value="18"/>
+          <enumeration value="19"/>
+          <enumeration value="20"/>
+          <enumeration value="21"/>
+          <enumeration value="22"/>
+          <enumeration value="23"/>
+          <enumeration value="24"/>
+          <enumeration value="25"/>
+          <enumeration value="26"/>
+          <enumeration value="27"/>
+          <enumeration value="28"/>
+          <enumeration value="29"/>
+          <enumeration value="30"/>
+          <enumeration value="31"/>
+        </restriction>
+      </simpleType>
+    </attribute>
+    <attribute use="optional" name="astrology" type="string"/>
+    <attribute use="optional" name="affinity">
+      <simpleType>
+        <restriction base="string">
+          <enumeration value="Men"/>
+          <enumeration value="Women"/>
+          <enumeration value="Both"/>
+        </restriction>
+      </simpleType>
+    </attribute>
+    <attribute use="optional" name="interest">
+      <simpleType>
+        <restriction base="string">
+          <enumeration value="Life/Experience"/>
+          <enumeration value="General/Sport"/>
+          <enumeration value="Music"/>
+          <enumeration value="Baseball"/>
+          <enumeration value="Basketball"/>
+          <enumeration value="Boxing"/>
+          <enumeration value="Football"/>
+          <enumeration value="Golf"/>
+          <enumeration value="Hockey"/>
+          <enumeration value="Motorsports"/>
+          <enumeration value="Soccer"/>
+          <enumeration value="Tennis"/>
+          <enumeration value="Wrestling"/>
+          <enumeration value="Ballet/Dance"/>
+          <enumeration value="Classical/Opera"/>
+          <enumeration value="Museums"/>
+          <enumeration value="Theater"/>
+          <enumeration value="Children's Music and Theater"/>
+          <enumeration value="Circus"/>
+          <enumeration value="Family"/>
+          <enumeration value="Attractions"/>
+          <enumeration value="Ice Shows"/>
+          <enumeration value="Rodeo"/>
+          <enumeration value="Ski Passes"/>
+        </restriction>
+      </simpleType>
+    </attribute>
+    <attribute use="optional" name="comments">
+      <simpleType>
+        <restriction base="string">
+          <maxLength value="100"/>
+        </restriction>
+      </simpleType>
+    </attribute>
+
+    <!-- needed to reference the associated QueryHit in searches -->
+    <attribute use="optional" name="index" type="int"/>
+
+    <!-- must be last attribute in all supported schemas -->
+    <attribute use="optional" name="action" type="string"/>
+
+    <!-- </restriction></complexContent> -->
+  </complexType>
+
+</schema>

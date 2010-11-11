@@ -1,0 +1,11 @@
+all
+.project
+.classpath
+bin
+eclipse
+target
+out.txt
+clover
+junit
+testData
+aggregate.jar

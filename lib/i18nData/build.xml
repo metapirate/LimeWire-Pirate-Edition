@@ -1,0 +1,71 @@
+<project name="i18ndata" default="i18n" basedir=".">
+
+<!-- set global properties for this basedir -->
+<property name="basedir" value="."/>
+<property name="core" value="../../core/"/>
+<property name="lib" value="../." />
+<property name="jars" value="${lib}/jars/"/>
+
+
+<!-- constants -->
+<property name="DEBUG" value="yes"/>  
+<property name="OPTIMIZE" value="no"/>  
+<property name="DEPRECATION" value="yes"/>
+<property name="NOWARN" value="yes"/>
+
+<!-- default classpath for javac.  it is set as the user's CLASSPATH
+     environment with the jar files necessary for compilation appended. -->
+<path id="default.classpath" >
+  <pathelement path="${CLASSPATH}" />
+  <fileset dir="${jars}" includes="*.jar"/>
+  <pathelement location="${basedir}" />
+  <pathelement path="${core}" />
+</path>
+
+
+<!-- Initialization stuff -->
+<target name="init">
+    <available file="${jars}" type="dir" property="jars.present"/>
+	<tstamp/>
+	<antcall target="checkjars"/>
+</target>
+
+<target name="checkjars" unless="jars.present">
+    <echo message="*******************************************************"/>
+    <echo message="*******  YOU MUST CHECKOUT THE lib MODULE *************"/>
+    <echo message="**** and place it as a sibling to this core module ****"/>
+    <echo message="*******************************************************"/>
+</target>
+
+
+<!-- everything -->
+<target name="i18n" depends="init">
+	<javac debug="${DEBUG}" optimize="${OPTIMIZE}"
+		srcdir="${basedir}" destdir="${basedir}"
+        nowarn="${NOWARN}" excludes="${unused}/**"
+	>
+      <classpath refid="default.classpath" />
+    </javac>
+</target>
+
+<!-- CLEAN -->
+<target name="clean">
+	<delete>
+		<fileset dir="${basedir}/com" includes="**/*.class"/>
+	</delete>
+</target>
+
+<!-- build i18n.jar -->
+<target name="jar">
+<delete file="data/built/i18n.jar"/>
+<jar destfile="data/built/i18n.jar"
+     basedir="data/built/."
+     excludes="**/*.jar"
+     >
+</jar>
+</target>
+
+</project>
+
+
+

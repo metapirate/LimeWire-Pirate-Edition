@@ -1,0 +1,45 @@
+<ivysettings>
+    <property name="limewire.home" value="${ivy.settings.dir}/../.." override="false"/>
+    <properties file="build.properties" override="false"/>
+    <properties file="dependencies.props"/>
+    
+    <!-- a bunch of patterns for how to store & lookup dependencies. -->
+    <property name="ivy.local.default.root"             value="${limewire.home}/.ivy2/local" override="false"/>
+	<property name="ivy.local.default.ivy.pattern"      value="[organisation]/[module]/[type]s/ivy.xml" override="false"/>
+	<property name="ivy.local.default.artifact.pattern" value="[organisation]/[module]/[type]s/[artifact].[ext]" override="false"/>
+	
+	<!-- use the resolver named 'default' to lookup our dependencies. -->
+	<settings defaultResolver="default"
+	          defaultConflictManager="all"/>
+	
+	<caches defaultCacheDir="${ivy.default.ivy.user.dir}/defaultCache"
+	        repositoryCacheDir="${limewire.home}/.ivy2/repositoryCache"
+	        resolutionCacheDir="${limewire.home}/.ivy2/resolutionCache"
+	        lockStrategy="artifact-lock"
+	        useOrigin="true"/>
+		
+	<resolvers>
+	    <!-- the cvs lib dir -->
+	    <filesystem name="cvslib" checkmodified="true">
+	        <artifact pattern="${limewire.lib.jars}/[artifact](-[revision]).[ext]"/>
+	    </filesystem>
+	
+	    <!-- where we'll store locally published files, used for publishing & retrieving. -->
+		<filesystem name="local">
+			<ivy pattern="${ivy.local.default.root}/${ivy.local.default.ivy.pattern}" />
+			<artifact pattern="${ivy.local.default.root}/${ivy.local.default.artifact.pattern}" />
+		</filesystem>
+	
+	    <!-- declaration of the default chain.  first we lookup in the local cache, then everywhere else. -->
+		<chain name="default-chain" checkmodified="true">
+			<resolver ref="local"/>
+			<resolver ref="cvslib"/>
+		</chain>
+		<!-- this is the actual default chain that should just 
+		     reference default-chain above so it can easily be overriden
+		  -->
+		<chain name="default" checkmodified="true">
+		  <resolver ref="default-chain"/>
+		</chain>
+	</resolvers>	
+</ivysettings>

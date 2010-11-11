@@ -1,0 +1,9 @@
+private-all
+.project
+.classpath
+bin
+eclipse
+target
+testData
+junit
+clover

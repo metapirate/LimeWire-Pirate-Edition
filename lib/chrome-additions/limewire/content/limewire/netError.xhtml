@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>error</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<style type="text/css">
+body {
+   font-size: 12px;
+   font-family: arial, helvetica, sans-serif;
+   color: #333;
+   padding: 0;
+   margin: 0;
+}
+div {
+   padding: 0;
+   margin: 0;
+}
+#wrapper {
+   position:absolute;
+   top: 50%;
+   left: 50%;
+   width: 500px;
+   height: 240px;
+   margin-top: -160px; /* Usually set to a negative number 1/2 of your height, but it's raised up a little bit to be more pronounced */
+   margin-left: -250px; /* set to a negative number 1/2 of your width */
+   /*background-color: red;*/
+}
+#bubble {
+   background-color: #c6ed89;
+   padding: 0;
+   margin: 0;
+}
+#bubble .tl {background: transparent url("chrome://limewire/content/img/bubble_tl.png") no-repeat top left;}
+#bubble .tr {background: transparent url("chrome://limewire/content/img/bubble_tr.png") no-repeat top right;}
+#bubble .bl {background: transparent url("chrome://limewire/content/img/bubble_bl.png") no-repeat bottom left;}
+#bubble .br {background: transparent url("chrome://limewire/content/img/bubble_br.png") no-repeat bottom right;}
+
+#bubble .t {background: transparent url("chrome://limewire/content/img/bubble_t.png") repeat-x top left;}
+#bubble .b {background: transparent url("chrome://limewire/content/img/bubble_b.png") repeat-x bottom left;}
+#bubble .l {background: transparent url("chrome://limewire/content/img/bubble_l.png") repeat-y top left;}
+#bubble .r {background: transparent url("chrome://limewire/content/img/bubble_r.png") repeat-y top right;}
+
+#bubble .container {
+   position: relative;
+   padding: 0;
+}
+#bubble .tip {
+   position: absolute;
+   z-index: 100;
+   left: 30px;
+   bottom: -31px;
+   width: 34px;
+   height: 33px;
+   background: transparent url("chrome://limewire/content/img/bubble_tip.png") no-repeat 0 0;
+}
+#bubble p {
+   padding: 4px 14px 14px 14px;
+   margin: 0;
+   font-size: 16px;
+}
+
+#bubble h1 {
+   height: 34px;
+   font-size: 20px;
+   background: transparent url("chrome://limewire/content/img/warning-large.png") no-repeat 10px 0;
+   padding: 14px 0 0 64px;
+   margin: 0;
+}
+</style>
+</head>
+<body>
+<div id="wrapper">
+
+<div id="bubble">
+   <div class="t"><div class="b"><div class="l"><div class="r">
+   <div class="tl"><div class="tr"><div class="bl"><div class="br">
+      <div class="container">
+         <h1>Network Error</h1>
+         <p>LimeWire is unable to connect to the internet. It's likely that you need to update your security software to allow LimeWire to access the internet. Please see <a href="http://www.limewire.com/connect" target="_blank">http://www.limewire.com/connect</a> for more information.</p>
+         <div class="tip"></div>
+      </div>
+   </div></div></div></div>
+   </div></div></div></div>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+build
+.classpath
+.project
+testData
+target
+.settings
+bin
+eclipse
+dist
+clover

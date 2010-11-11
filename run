@@ -1,0 +1,101 @@
+#!/bin/bash
+
+LW_ROOT_FOLDER=`dirname $0`
+cd "$LW_ROOT_FOLDER"
+
+### Run script for LimeWire.
+### Builds a classpath for all jars & components.
+
+CLASSPATH=
+PS=":"
+
+OPTS="-Djava.net.preferIPV6Addresses=false -ea -da:ca.odell.glazedlists... -Djava.net.preferIPv4stack=true -splash:private-components/swingui/src/main/resources/org/limewire/ui/swing/mainframe/resources/splash.png"
+
+#setup the java options & initial system-dependent classpath
+PLATFORM=`uname`
+case ${PLATFORM} in 
+    Linux)
+        OPTS="${OPTS} -Djava.library.path=lib/native/linux";
+        OPTS="${OPTS} -Djna.library.path=lib/native/linux";
+	OPTS="${OPTS} -Dsun.java2d.pmoffscreen=false";
+        export PATH="${PATH}:lib/native/linux";
+        ADDITIONAL=linux
+    ;;
+    Darwin)
+        CLASSPATH="${CLASSPATH}:/System/Library/Java";
+        OPTS="${OPTS} -Djava.library.path=lib/native/osx";
+        OPTS="${OPTS} -Djna.library.path=lib/native/osx";
+        OPTS="${OPTS} -Djava.endorsed.dirs=\"\"";
+        OPTS="${OPTS} -Xdock:icon=LimeWire.icns";
+        ADDITIONAL=osx
+    ;;
+    CYGWIN*)
+    	OPTS="${OPTS} -Djna.library.path=lib/native/windows";
+        PS=";"
+        export PATH=$PATH:lib/native/windows
+        ADDITIONAL=windows
+        
+    ;;
+    *)
+        echo "Sorry, platform '${platform}' is not recognized.";
+        exit 1;
+    ;;
+esac
+
+#add all the jars.
+for JAR in $(find lib/jars -maxdepth 1 -name "*.jar"); do 
+   CLASSPATH="${CLASSPATH}${PS}${JAR}"
+done
+
+#add all the additional jars.
+for JAR in $(find lib/jars/${ADDITIONAL} -maxdepth 1 -name "*.jar" ); do 
+   CLASSPATH="${CLASSPATH}${PS}${JAR}"
+done
+
+#add all the other jars.
+for JAR in $(find lib/jars/other -maxdepth 1 -name "*.jar" ); do 
+   CLASSPATH="${CLASSPATH}${PS}${JAR}"
+done
+
+#add all the resources
+CLASSPATH="${CLASSPATH}${PS}lib/resources"
+
+#add all the additional resources
+CLASSPATH="${CLASSPATH}${PS}lib/resources/${ADDITIONAL}"
+
+#add all the components.
+for COMPONENT in $(ls components); do
+	if [ -d "components/${COMPONENT}/src" ]
+	then
+		CLASSPATH="${CLASSPATH}${PS}components/${COMPONENT}/build/classes${PS}components/${COMPONENT}/src/main/resources"
+	fi
+done
+
+#add all the private-components.
+for COMPONENT in $(ls private-components); do
+	if [ -d "private-components/${COMPONENT}/src" ]
+	then
+		CLASSPATH="${CLASSPATH}${PS}private-components/${COMPONENT}/build/classes${PS}private-components/${COMPONENT}/src/main/resources"
+	fi
+done
+
+export CLASSPATH
+
+# uncomment if you want to do the serialver with the classpath all setup.
+#serialver $*
+#exit 0
+
+# Minor hack to get proper space quoting in OS X
+# "\"LimeWire CVS\"", "LimeWire\040CVS", and "'LimeWire CVS'" all fail
+case ${PLATFORM} in
+    Darwin)
+	export DYLD_FRAMEWORK_PATH=$DYLD_FRAMEWORK_PATH:lib/native/osx
+
+	if ! [ -d "lib/native/osx/Growl.framework" ]; then
+		unzip "lib/native/osx/Growl.framework.zip" -d "lib/native/osx/"
+	fi
+
+        java ${OPTS} -Xdock:name="LimeWire CVS" org.limewire.ui.swing.Main $* ;;
+    *)
+        java ${OPTS} org.limewire.ui.swing.Main $* ;;
+esac
