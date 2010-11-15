@@ -8,7 +8,6 @@
     </publications>
     <dependencies>
         <!-- compile & runtime dependencies. -->
-        <dependency org="org.limewire" name="activation-api" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="friend" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="common" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="io" rev="latest.integration" conf="compile,runtime"/>
@@ -20,11 +19,10 @@
         <dependency org="org.limewire" name="core-settings" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="xmpp-api" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="player-api" rev="latest.integration" conf="compile,runtime"/>
-        <dependency org="org.limewire" name="mock-core" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="bittorrent-api" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="geocode" rev="latest.integration" conf="compile,runtime"/>
 
-		<dependency org="none" name="compile/AppleJavaExtensions" rev="${AppleJavaExtensions.version}" conf="compile"/>
+        <dependency org="none" name="compile/AppleJavaExtensions" rev="${AppleJavaExtensions.version}" conf="compile"/>
         <dependency org="none" name="fmj" rev="${fmj.version}" conf="compile,runtime"/>
         <dependency org="none" name="osx/asm" rev="${asm.version}" conf="compile,runtime"/>
         <dependency org="none" name="osx/cglib" rev="${cglib.version}" conf="compile,runtime"/>
@@ -32,8 +30,8 @@
         <dependency org="none" name="osx/rococoa-cocoa" rev="${rococoa-cocoa.version}" conf="compile,runtime"/>
         <dependency org="none" name="osx/slf4j-api" rev="${slf4j-api.version}" conf="compile,runtime"/>
         <dependency org="none" name="osx/slf4j-jdk14" rev="${slf4j-jdk14.version}" conf="compile,runtime"/>
-		<dependency org="none" name="foxtrot-core" rev="${foxtrot-core.version}" conf="compile,runtime"/>
-		<dependency org="none" name="google-collect" rev="${google-collect.version}" conf="compile,runtime"/>
+        <dependency org="none" name="foxtrot-core" rev="${foxtrot-core.version}" conf="compile,runtime"/>
+        <dependency org="none" name="google-collect" rev="${google-collect.version}" conf="compile,runtime"/>
         <dependency org="none" name="guice-assistedinject" rev="${guice-assistedinject.version}" conf="compile,runtime"/>
         <dependency org="none" name="swingx" rev="${swingx.version}" conf="compile,runtime"/>
         <dependency org="none" name="AppFramework" rev="${AppFramework.version}" conf="compile,runtime"/>
@@ -57,9 +55,5 @@
                 
         <!-- runtime dependencies. -->
         <dependency org="none" name="messages" rev="" conf="runtime"/>
-        
-        <!-- test dependencies. -->
-        <dependency org="org.limewire" name="common" rev="latest.integration" conf="test"/>
-        <dependency org="none" name="tests/inspTool" rev="${inspTool.version}" conf="test"/>
     </dependencies>
 </ivy-module>

@@ -11,7 +11,7 @@
         <dependency org="org.limewire" name="common" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="io" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="nio" rev="latest.integration" conf="compile,runtime"/>
-        <dependency org="org.limewire" name="net" rev="latest.integration" conf="compile,runtime,test"/>
+        <dependency org="org.limewire" name="net" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="http" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="security" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="xmpp-api" rev="latest.integration" conf="compile,runtime"/>
@@ -25,7 +25,5 @@
         <dependency org="none" name="jcip-annotations" rev="${jcip-annotations.version}" conf="compile,runtime"/>
         <dependency org="none" name="dnsjava" rev="${dnsjava.version}" conf="compile,runtime"/>
         <dependency org="none" name="httpclient" rev="${httpclient.version}" conf="compile,runtime"/>
-        
-        <dependency org="org.limewire" name="common" rev="latest.integration" conf="test"/>
     </dependencies>
 </ivy-module>

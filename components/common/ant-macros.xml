@@ -2,31 +2,17 @@
 
 <project name="ant-macros" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
-	<description>
-	    Common macros for use on both multi and single component build scripts.
-	</description>
-	
-	<property name="limewire.home" location="${basedir}/../.."/> 
-	<property file="${limewire.home}/components/common/build.properties"/>
-	
-	<target name="initialize"/> <!-- Must implement an initialize when using these macros! -->
-	
-    <target name="tests-failguard">
-		<fail if="testsfailed" message="One or more tests failed!"/>
-    </target>
+    <description>
+        Common macros for use on both multi and single component build scripts.
+    </description>
     
-    <!-- Checks to see if clover is installed and sets a property if so -->
-    <target name="clover-check" unless="clover.installed">
-        <available property="clover.installed" classname="com.cenqua.clover.CloverInstr" />
-    </target>
+    <property name="limewire.home" location="${basedir}/../.."/> 
+    <property file="${limewire.home}/components/common/build.properties"/>
     
-    <!-- Fails if clover isn't setup. -->
-    <target name="clover-guard" depends="clover-check" unless="clover.installed">
-        <fail message="Clover is not installed, the build cannot continue."/>
-    </target>	
+    <target name="initialize"/> <!-- Must implement an initialize when using these macros! -->
     
     <target name="ivy-clean-cache" depends="ivy-load">
-        <ivy:cleancache />                                                              
+        <ivy:cleancache />
     </target>
     
     <target name="ivy-graph-report" depends="ivy-load">
@@ -35,7 +21,7 @@
     
     <target name="ivy-load" unless="ivy.loaded">
         <property name="ivy.loaded" value="true"/>
-    	<taskdef resource="org/apache/ivy/ant/antlib.xml"
+        <taskdef resource="org/apache/ivy/ant/antlib.xml"
                  uri="antlib:org.apache.ivy.ant"
                  classpath="${limewire.lib.jars.ant}/ivy-2.0.0.jar"
         />
@@ -73,7 +59,7 @@
                 <post-targets/>
             </subant>    
         </sequential>
-    </macrodef>    	    
+    </macrodef>            
     
 </project>
     

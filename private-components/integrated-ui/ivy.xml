@@ -31,12 +31,6 @@
         <dependency org="none" name="swingx" rev="${swingx.version}" conf="compile,runtime"/>
         <dependency org="none" name="MozillaInterfaces" rev="${MozillaInterfaces.version}" conf="compile,runtime"/>
         <dependency org="none" name="mozswing" rev="${mozswing.version}" conf="compile,runtime"/>
-        
-        <dependency org="org.limewire" name="common" rev="latest.integration" conf="test"/>
-        <dependency org="org.limewire" name="gnutella-core" rev="latest.integration" conf="test"/>
-        
-        <dependency org="none" name="tests/inspTool" rev="${inspTool.version}" conf="test"/>
-        <dependency org="none" name="tests/bcel" rev="${bcel.version}" conf="test"/>
         <dependency org="none" name="jna" rev="${jna.version}" conf="compile,runtime"/>
     </dependencies>
 </ivy-module>

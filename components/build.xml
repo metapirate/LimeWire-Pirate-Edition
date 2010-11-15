@@ -2,9 +2,8 @@
 
 <project name="lw-components" basedir="." default="compile" xmlns:ivy="antlib:org.apache.ivy.ant">
 
-	<property name="limewire.home" location="${basedir}/.."/>
-	
-	<!-- when running components' test-all, don't include core-glue -->	
+    <property name="limewire.home" location="${basedir}/.."/>
+    
     <property name="excludes" value="core-glue/*, gnutella-core/*"/>
     
     <import file="common/generic-multi-build.xml"/>

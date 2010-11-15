@@ -4,19 +4,10 @@
     <property name="limewire.home" location="${basedir}"/>
     <property name="includes" value="*/*/build.xml"/>
     
-	<property name="cloverdb-excludes" value="private-components/mock-core/clover/**"/>
-	<property name="cloverdb-includes" value="*/*/clover/clover.db"/>
-	
     <property name="aggregate.jar-jarname" value="LimeWire.jar"/>
     <property name="aggregate.jar-includes" value="*/*/dist/main/*.jar"/>
-    <property name="aggregate.jar-excludes" value="private-components/mock-core/**"/>
 	
     <import file="components/common/generic-multi-build.xml"/>
-    
-    <!-- runs all tests except those in gnutella-core. -->
-    <target name="test-fast-tests" depends="publish-dependencies">
-        <do.multi-ant target="test-all" excludes="components/gnutella-core/*"/>
-	</target>
     
     <!-- BEGIN GETTEXT TASKS -->
 
@@ -48,8 +39,6 @@
           <fileset dir="components">
 	    <patternset id="non.test.sources">
 	      <include name="**/*.java"/>
-	      <exclude name="**/src/test/**"/>
-	      <exclude name="**/src/test-common/**"/>
 	    </patternset>
 	  </fileset>
           <fileset dir="private-components">

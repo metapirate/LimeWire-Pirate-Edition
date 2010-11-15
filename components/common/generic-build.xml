@@ -7,82 +7,51 @@
         Compiling a component with dependencies will compile and
         locally publish all its dependencies.
     </description>
-	
-	<import file="ant-macros.xml"/>
+    
+    <import file="ant-macros.xml"/>
 
-    <property name="component" value="${ant.project.name}"/>	
-	<property name="default.code.path" value="org/limewire"/>
+    <property name="component" value="${ant.project.name}"/>    
+    <property name="default.code.path" value="org/limewire"/>
     
     <target name="initialize" depends="ivy-load" unless="initialized.${component}">
         <do.setup-properties/>
     </target>
-	
-	<target name="publish-dependencies" depends="initialize" unless="ivy.dependencies.published">
-	    <property name="ivy.dependencies.published" value="true"/>
+    
+    <target name="publish-dependencies" depends="initialize" unless="ivy.dependencies.published">
+        <property name="ivy.dependencies.published" value="true"/>
         <do.subant dir="${limewire.home}" includes="**/build.xml" root="${component}" target="publish" excluderoot="true"/>
-	</target>
-	
-	<target name="clean" depends="initialize">
-	    <do.clean/>
-	</target>
-    
-    <target name="compile" depends="compile-src, compile-tests">
     </target>
-	
-	<target name="compile-src" depends="publish-dependencies">
-	    <do.compile-src/>
-	</target>
     
-	<target name="clean-src" depends="initialize">
-	    <do.clean-src/>
-	</target>
-	
-	<target name="compile-tests" depends="compile-src">
-	    <do.compile-tests/>
-	</target>
-    
-	<target name="clean-tests" depends="initialize">
-	    <do.clean-tests/>
-	</target>
-	
-	<target name="test" depends="compile">
-	    <do.test class="${class}"/>
-	</target>
-	
-	<target name="test-package" depends="compile">
-	    <do.test-package/>
-	</target>
-	
-	<target name="test-all" depends="compile">
-	    <do.test-all/>
-	</target>
-	
-	<target name="tests2html" depends="initialize">
-        <do.tests2html/>
+    <target name="clean" depends="initialize">
+        <do.clean/>
     </target>
+    
+    <target name="compile" depends="compile-src">
+    </target>
+    
+    <target name="compile-src" depends="publish-dependencies">
+        <do.compile-src/>
+    </target>
+    
+    <target name="clean-src" depends="initialize">
+        <do.clean-src/>
+    </target>
+    
     
     <target name="jar" depends="compile-src">
         <do.jar/>
     </target>
     
     <target name="javadoc" depends="compile-src">
-    	<do.javadoc/>
-	</target>
-	
-	<target name="publish" depends="jar">
-	   <do.publish/>
+        <do.javadoc/>
+    </target>
+    
+    <target name="publish" depends="jar">
+       <do.publish/>
     </target>
     
     <target name="clean-dist" depends="initialize">
         <do.clean-dist/>
-    </target>
-    
-    <target name="with.clover" depends="initialize">
-        <do.clover-setup/>
-	</target>
-    
-    <target name="clover2html" depends="with.clover">
-        <do.clover2html/>
     </target>
     
     <macrodef name="do.setup-properties" description="Sets up common properties every macro uses.">
@@ -91,120 +60,50 @@
         
             <property name="initialized.${component}" value="true"/>
             
-            <!-- paths for src java files, test java files, and resource files -->
-        	<property name="limewire.components.this.home"
-        		      location="${limewire.components.home}/${component}"/>
-        	<property name="limewire.components.this.src.home"
-        			  location="${limewire.components.this.home}/src/main"/>	
-        	<property name="limewire.components.this.src"
-            		  location="${limewire.components.this.src.home}/java"/>            		  
-        	<property name="limewire.components.this.src.resources"
-            		  location="${limewire.components.this.src.home}/resources"/>
-            		  
-        	<property name="limewire.components.this.test-common.home"
-        			  location="${limewire.components.this.home}/src/test-common/"/>	
-        	<property name="limewire.components.this.test-common"
-            		  location="${limewire.components.this.test-common.home}/java"/>            		  
-        	<property name="limewire.components.this.test-common.resources"
-            		  location="${limewire.components.this.test-common.home}/resources"/>            		  
-            		  
-            <property name="limewire.components.this.tests.home"
-        			  location="${limewire.components.this.home}/src/test"/>
-          	<property name="limewire.components.this.tests"
-              		  location="${limewire.components.this.tests.home}/java"/>
-          	<property name="limewire.components.this.tests.resources"
-              		  location="${limewire.components.this.tests.home}/resources"/>
-            
-            <!-- paths for compiling src & test -->
-        	<property name="build.limewire.components.this.home"
-        		      location="${limewire.components.this.home}/build"/>
-        	<property name="build.limewire.components.this.classes"
-        			  location="${build.limewire.components.this.home}/classes"/>
-        	<property name="build.limewire.components.this.test-common.classes"
-        			  location="${build.limewire.components.this.home}/test-common"/>        			  
+            <!-- paths for src java files and resource files -->
+            <property name="limewire.components.this.home"
+                      location="${limewire.components.home}/${component}"/>
+            <property name="limewire.components.this.src.home"
+                      location="${limewire.components.this.home}/src/main"/>    
+            <property name="limewire.components.this.src"
+                      location="${limewire.components.this.src.home}/java"/>                      
+            <property name="limewire.components.this.src.resources"
+                      location="${limewire.components.this.src.home}/resources"/>
+                      
+            <!-- paths for compiling src -->
+            <property name="build.limewire.components.this.home"
+                      location="${limewire.components.this.home}/build"/>
+            <property name="build.limewire.components.this.classes"
+                      location="${build.limewire.components.this.home}/classes"/>
             <property name="build.limewire.components.this.lib"
-        			  location="${build.limewire.components.this.home}/lib"/>	
-        	<property name="build.limewire.components.this.tests"
-        			  location="${build.limewire.components.this.home}/tests"/>
-        	
-        	<!-- paths for test runtime. -->
-        	<property name="tests.limewire.components.this.home"
-        		      location="${limewire.components.this.home}/testData"/>  		      
-            <property name="tests.limewire.components.this.xml"
-            		  location="${tests.limewire.components.this.home}/xml"/>
-            <property name="tests.limewire.components.this.html"
-            		  location="${tests.limewire.components.this.home}/html"/>
-            
-            <!-- paths for clover output -->
-            <property name="clover.limewire.components.this.home"
-			          location="${limewire.components.this.home}/clover"/>
-            <property name="clover.limewire.components.this.db"
-                      location="${clover.limewire.components.this.home}/clover.db"/>      			          
-            <property name="clover.limewire.components.this.html"
-			          location="${clover.limewire.components.this.home}/html"/>
-            <property name="clover.limewire.components.this.xml"
-			          location="${clover.limewire.components.this.home}/coverage.xml"/>
-            
+                      location="${build.limewire.components.this.home}/lib"/>    
             <!-- paths for distribution files, including javadoc & jar. -->
             <property name="dist.limewire.components.this.home"
                       location="${limewire.components.this.home}/dist"/>
             <property name="dist.limewire.components.this.javadoc"
-            		  location="${dist.limewire.components.this.home}/javadoc"/>
+                      location="${dist.limewire.components.this.home}/javadoc"/>
             <property name="dist.limewire.components.this.src.jar.dir"
                       location="${dist.limewire.components.this.home}/main"/>
             <property name="dist.limewire.components.this.src.jar"
-            		  location="${dist.limewire.components.this.src.jar.dir}/${component}.jar"/>
+                      location="${dist.limewire.components.this.src.jar.dir}/${component}.jar"/>
             <!--<property name="dist.limewire.components.this.api.jar"
                       location="${dist.limewire.components.this.home}/${component}-api.jar"/> -->
-            <property name="dist.limewire.components.this.test-common.jar.dir"
-                      location="${dist.limewire.components.this.home}/test/"/>
-            <property name="dist.limewire.components.this.test-common.jar"
-                      location="${dist.limewire.components.this.test-common.jar.dir}/${component}-test-common.jar"/>
-            
-            <!-- whether or not to write tests to file instead of stdout. -->
-            <property name="tests.writetofileonly" value="false"/>
-       	
-       	    <!-- the src build classpath -->
-        	<path id="build.limewire.components.this.src.classpath">
+           
+               <!-- the src build classpath -->
+            <path id="build.limewire.components.this.src.classpath">
                 <!-- TODO parameterize 'compile' with ivy-module configuration name -->
                 <fileset dir="${build.limewire.components.this.lib}/compile/" includes="**/*"/> <!-- ivy src dependencies -->
-        	</path>
-        	
-        	<path id="build.limewire.components.this.test-common.classpath">
-                <!-- TODO parameterize 'test-common' with ivy-module configuration name -->
-                <pathelement location="${build.limewire.components.this.classes}"/>
-                <fileset dir="${build.limewire.components.this.lib}/test-common/" includes="**/*"/> <!-- ivy src dependencies -->
-        	</path>        	
-            
-            <!-- the tests build classpath -->
-    	    <path id="build.limewire.components.this.tests.classpath">
-	        	<!-- TODO parameterize 'test' with ivy-module configuration name -->
-                <pathelement location="${build.limewire.components.this.classes}"/>
-                <pathelement location="${build.limewire.components.this.test-common.classes}"/>
-                <fileset dir="${build.limewire.components.this.lib}/test/" includes="**/*"/> <!-- ivy test dependencies -->
-    	    </path>
-        	
-        	<!-- the tests junit runtime classpath -->
-        	<path id="tests.limewire.components.this.classpath">
-        	    <pathelement location="${limewire.components.this.src.resources}"/> <!-- src resources -->
-        	    <pathelement location="${limewire.components.this.tests.resources}"/> <!-- test resources -->
-        	    <pathelement location="${limewire.components.this.test-common.resources}"/> <!-- test-common resources -->
-        		<pathelement location="${build.limewire.components.this.tests}"/> <!-- test compile results -->
-        		<path refid="build.limewire.components.this.tests.classpath"/> <!-- test compile classpath -->
-           	    <pathelement location="${cloverjar}"/> <!-- clover -->
-        	</path>
+            </path>
         </sequential>
     </macrodef>
     
     <macrodef name="do.clean" description="Cleans all generated directories.">
-		<sequential>
+        <sequential>
             <echo message="cleaning ${component}..." />
-        	<do.clean-testData/>
-		    <do.clean-build   />
-			<do.clean-dist    />
-		    <do.clean-clover  />
-		</sequential>
-	</macrodef>
+            <do.clean-build   />
+            <do.clean-dist    />
+        </sequential>
+    </macrodef>
     
     <macrodef name="do.resolve-dependencies" description="retreive dependencies with ivy">
         <attribute name="ivy.file" default="${limewire.components.this.home}/ivy.xml"/>
@@ -221,167 +120,59 @@
             <!-- because ivy:retrieve has sync==true, if there are no dependencies, the dir will be removed.
                  we don't want it removed, because then javac fails because the classpath is missing. -->
             <mkdir dir="${build.limewire.components.this.lib}/compile"/>
-            <mkdir dir="${build.limewire.components.this.lib}/test"/>
-            <mkdir dir="${build.limewire.components.this.lib}/test-common"/>
         </sequential>
     </macrodef>
-	
-	<macrodef name="do.compile-src" description="Compiles only the source code.">
-	    <element name="more-src-paths" optional="true"/>
-	    <attribute name="excludes" default=""/>
-	    <sequential>
+    
+    <macrodef name="do.compile-src" description="Compiles only the source code.">
+        <element name="more-src-paths" optional="true"/>
+        <attribute name="excludes" default=""/>
+        <sequential>
             <echo message="compiling source for ${component}..." />
-	        <do.build-init/>
+            <do.build-init/>
             <mkdir dir="${limewire.components.this.src}"/>
-			<mkdir dir="${build.limewire.components.this.classes}"/>
+            <mkdir dir="${build.limewire.components.this.classes}"/>
             <do.resolve-dependencies/>
-			<javac destdir		="${build.limewire.components.this.classes}"
- 				   debug	    ="${compile.debug}"
-				   deprecation  ="${compile.deprecation}"
-	 	           optimize     ="${compile.optimize}"
-				   encoding     ="UTF-8"
-		           source		="${compile.source}"
-	  	           target       ="${compile.target}"
-	 	           sourcepath   =""
-			       excludes     ="@{excludes}"
-	 	    >
-			    <compilerarg value="-Xlint:unchecked"/>
-				<src>
-					<pathelement location="${limewire.components.this.src}"/>
-				    <more-src-paths/>
-			    </src>
-				<classpath refid="build.limewire.components.this.src.classpath"/>
-			</javac>
-			
-			<!-- compile the test-common code, also.
-			 this could be another target entirely (compile-test-common, clean-test-common, etc...
-			 but this works for now. -->
-            <mkdir dir="${limewire.components.this.test-common}"/>
-			<mkdir dir="${build.limewire.components.this.test-common.classes}"/>			 
-            <javac destdir		="${build.limewire.components.this.test-common.classes}"
- 				   debug	    ="${compile.debug}"
-				   deprecation  ="${compile.deprecation}"
-	 	           optimize     ="${compile.optimize}"
-				   encoding     ="UTF-8"
-		           source		="${compile.source}"
-	  	           target       ="${compile.target}"
-	 	           sourcepath   =""
-			       excludes     ="@{excludes}"
-	 	    >
-			    <compilerarg value="-Xlint:unchecked"/>
-				<src>
-					<pathelement location="${limewire.components.this.test-common}"/>
-				    <more-src-paths/>
-			    </src>
-				<classpath refid="build.limewire.components.this.test-common.classpath"/>
-			</javac>
-	    </sequential>
-	</macrodef>
+            <javac destdir        ="${build.limewire.components.this.classes}"
+                    debug        ="${compile.debug}"
+                   deprecation  ="${compile.deprecation}"
+                    optimize     ="${compile.optimize}"
+                   encoding     ="UTF-8"
+                   source        ="${compile.source}"
+                     target       ="${compile.target}"
+                    sourcepath   =""
+                   excludes     ="@{excludes}"
+             >
+                <compilerarg value="-Xlint:unchecked"/>
+                <src>
+                    <pathelement location="${limewire.components.this.src}"/>
+                    <more-src-paths/>
+                </src>
+                <classpath refid="build.limewire.components.this.src.classpath"/>
+            </javac>
+            
+        </sequential>
+    </macrodef>
     
     <macrodef name="do.clean-src" description="Cleans generated classfiles from compiling source.">
         <sequential>
             <echo message="cleaning ${component}..." />
-			<delete dir="${build.limewire.components.this.classes}" />
+            <delete dir="${build.limewire.components.this.classes}" />
         </sequential>
     </macrodef>
-	
-	<macrodef name="do.compile-tests" description="Compiles test code and copies resources tests use.">
-		<sequential>
-            <echo message="compiling tests for ${component}..." />
-            <mkdir dir="${limewire.components.this.tests}"/>
-			<mkdir dir="${build.limewire.components.this.tests}"/>
-            <do.resolve-dependencies/>
-			<javac destdir		="${build.limewire.components.this.tests}"
- 				   debug	    ="${compile.debug}"
-				   deprecation  ="${compile.deprecation}"
-	   	   		   optimize     ="${compile.optimize}"
-				   encoding     ="ISO-8859-1"
-	    	       source		="${compile.source}"
-	        	   target       ="${compile.target}"
-	        	   srcdir       ="${limewire.components.this.tests}"
-	   		>
-				<classpath refid="build.limewire.components.this.tests.classpath"/>
-			</javac>
-		</sequential>
-	</macrodef>
     
-	<macrodef name="do.clean-tests" description="Cleans generated classfiles and resources from compiling tests.">
-	    <sequential>
-			<delete dir="${build.limewire.components.this.tests}" />
-	    </sequential>
-	</macrodef>
-    
-	<macrodef name="do.clean-testData" description="Cleans any data generated by running tests.">	    
-	    <sequential>
-			<delete dir="${tests.limewire.components.this.home}" />
-	    </sequential>
-	</macrodef>
-	
-	<macrodef name="do.test" description="Runs a single test class.">
-	    <attribute name="class"/>
-	    <attribute name="path" default="${default.code.path}"/>
-	    <sequential>
-	    	<do.clean-testData/>
-	        <do.tests-init/>
-			<do.run-tests-batchunit 
-			                   haltonerror="true"
-						       haltonfailure="true"
-						       unit="@{path}/@{class}.class"
-			/>
-	    </sequential>
-	</macrodef>
-	
-	<macrodef name="do.test-package" description="Runs all tests in a single package.">
-	    <attribute name="path" default="${default.code.path}"/>
-	    <attribute name="forkmode" default="once"/>
-	    <sequential>
-	        <do.clean-testData     />
-	        <do.tests-init         />
-			<do.run-tests-batchunit unit="@{path}/*Test.class"
-			    					forkmode="@{forkmode}"
-			/>
-	    </sequential>
-	</macrodef>
-	
-	<macrodef name="do.test-all" description="Runs all tests.">	    
-	    <element name="testLocations"  optional="true"/>
-	    <attribute name="forkmode"     default="perTest"/>
-	    <attribute name="filter"     default="**/*Test.class"/>
-	    <sequential>
-	        <do.clean-testData     />
-	        <do.tests-init         />
-	        <do.run-tests-batchunit unit="@{filter}"
-	            					forkmode="@{forkmode}"
-	        						exclude="${junit.excludes}"
-	        >
-	        	<testPathLocations>
-	        	   <testLocations/>
-	            </testPathLocations>
-	        </do.run-tests-batchunit>
-	    </sequential>
-	</macrodef>
-    
-    <macrodef name="do.jar" description="Generates a jar of the classfiles.">    	
+    <macrodef name="do.jar" description="Generates a jar of the classfiles.">        
         <attribute name="compress"    default="false"/>
         <sequential>
             <do.dist-init/>
             <mkdir dir="${limewire.components.this.src.resources}"/>
             <jar destfile="${dist.limewire.components.this.src.jar}"
-            	 compress="@{compress}"
+                 compress="@{compress}"
                  basedir="${build.limewire.components.this.classes}"
                  whenmanifestonly="skip"
             >
                 <fileset dir="${limewire.components.this.src.resources}"/>
             </jar>
             
-            <mkdir dir="${limewire.components.this.test-common.resources}"/>
-            <jar destfile="${dist.limewire.components.this.test-common.jar}"
-            	 compress="@{compress}"
-                 basedir="${build.limewire.components.this.test-common.classes}"
-                 whenmanifestonly="skip"
-            >
-                <fileset dir="${limewire.components.this.test-common.resources}"/>
-            </jar>            
         </sequential>
     </macrodef>
     
@@ -390,7 +181,6 @@
             <ivy:publish resolver="local"
                          overwrite="true"
                          forcedeliver="true">
-                <artifacts pattern="${dist.limewire.components.this.test-common.jar.dir}/[artifact].[ext]"/>
                 <artifacts pattern="${dist.limewire.components.this.src.jar.dir}/[artifact].[ext]"/>
             </ivy:publish>
         </sequential>
@@ -400,7 +190,7 @@
         <format property="timestamp.today" pattern="EEEE, MMMM d yyyy"/>
     </tstamp>
     
-    <macrodef name="do.javadoc" description="Generates a javadoc for the source.">    	
+    <macrodef name="do.javadoc" description="Generates a javadoc for the source.">        
         <attribute name="windowtitle" default="LimeWire ${component} component api for ${timestamp.today}"/>
         <attribute name="doctitle" default="LimeWire ${component} component api &lt;br/&gt; for ${timestamp.today}"/>
         <attribute name="header" default="LimeWire ${component} component api"/>
@@ -409,17 +199,17 @@
         <attribute name="sourcepath" default="${limewire.components.this.src}"/>
         <attribute name="includes" default="**/*.java"/>
         <attribute name="excludes" default=""/>
-    	<sequential>
-    	    <delete dir="${dist.limewire.components.this.javadoc}"/>
-    	    <mkdir dir="${dist.limewire.components.this.javadoc}"/>
-    	    <javadoc destdir="${dist.limewire.components.this.javadoc}"
+        <sequential>
+            <delete dir="${dist.limewire.components.this.javadoc}"/>
+            <mkdir dir="${dist.limewire.components.this.javadoc}"/>
+            <javadoc destdir="${dist.limewire.components.this.javadoc}"
                      windowtitle="@{windowtitle}"
                      header="@{header}"
                      doctitle="@{doctitle}"
-    	        	 use="true"
+                     use="true"
                      author="false"
-    	        	 version="false"
-					 packagenames="*"
+                     version="false"
+                     packagenames="*"
                      useexternalfile="yes">
                 <link href="http://java.sun.com/javase/6/docs/api/"/>
                 <link href="http://jakarta.apache.org/commons/logging/apidocs/"/>
@@ -438,174 +228,55 @@
                 <link href="http://www.limewire.org/nightly/modules/libtorrent/api/"/>
                 <link href="http://www.limewire.org/nightly/modules/mojito/api/"/>
                 <link href="http://www.limewire.org/nightly/modules/mojito-ui/api/"/>
-    	    	<link href="http://www.limewire.org/nightly/modules/net/api/"/>
-            	<link href="http://www.limewire.org/nightly/modules/nio/api/"/>
-            	<link href="http://www.limewire.org/nightly/modules/player/api/"/>
-            	<link href="http://www.limewire.org/nightly/modules/player-api/api/"/>
-        		<link href="http://www.limewire.org/nightly/modules/rest/api/"/>
-        		<link href="http://www.limewire.org/nightly/modules/rudp/api/"/>
-        		<link href="http://www.limewire.org/nightly/modules/security/api/"/>
-        		<link href="http://www.limewire.org/nightly/modules/setting/api/"/>
-        		<link href="http://www.limewire.org/nightly/modules/statistic/api/"/>
-    	    	<link href="http://www.limewire.org/nightly/modules/test-util/api/"/>
-    			<link href="http://www.limewire.org/nightly/modules/xmpp/api/"/>
-    			<link href="http://www.limewire.org/nightly/modules/xmpp-api/api/"/>
-				<link href="http://www.limewire.org/nightly/modules/integrated-ui/api/"/>
-				<link href="http://www.limewire.org/nightly/modules/mock-core/api/"/>
-				<link href="http://www.limewire.org/nightly/modules/swingui/api/"/>
-				<!-- TODO: add more components as time goes on, and figure out a way to not require this. -->
-				
-     	        <classpath refid="@{classpathrefid}"/>
+                <link href="http://www.limewire.org/nightly/modules/net/api/"/>
+                <link href="http://www.limewire.org/nightly/modules/nio/api/"/>
+                <link href="http://www.limewire.org/nightly/modules/player/api/"/>
+                <link href="http://www.limewire.org/nightly/modules/player-api/api/"/>
+                <link href="http://www.limewire.org/nightly/modules/rest/api/"/>
+                <link href="http://www.limewire.org/nightly/modules/rudp/api/"/>
+                <link href="http://www.limewire.org/nightly/modules/security/api/"/>
+                <link href="http://www.limewire.org/nightly/modules/setting/api/"/>
+                <link href="http://www.limewire.org/nightly/modules/statistic/api/"/>
+                <link href="http://www.limewire.org/nightly/modules/xmpp/api/"/>
+                <link href="http://www.limewire.org/nightly/modules/xmpp-api/api/"/>
+                <link href="http://www.limewire.org/nightly/modules/integrated-ui/api/"/>
+                <link href="http://www.limewire.org/nightly/modules/swingui/api/"/>
+                <!-- TODO: add more components as time goes on, and figure out a way to not require this. -->
+                
+                 <classpath refid="@{classpathrefid}"/>
                 <!--sourcepath location="@{sourcepath}"/-->
                 <sourcefiles>
                     <fileset dir="@{sourcepath}" includes="@{includes}" excludes="@{excludes}"/>
                 </sourcefiles>
-     	        <more-javadoc-elements/>
-    	    	<bottom><![CDATA[Copyright &#169; 2009 <a href="http://www.limewire.org">Lime Wire LLC</a>. All Rights Reserved.]]></bottom>    	    	
-    	    </javadoc>
-	    </sequential>
-    </macrodef>
-	
-	<macrodef name="do.run-tests-batchunit">
-		<attribute name="exclude" default=""/>
-	    <attribute name="unit"/>
-	    <attribute name="haltOnFailure"     default="false"/>
-	    <attribute name="haltOnError"	    default="false"/>
-	    <attribute name="nativePathRefId"   default="limewire.library.path"/>
-	    <element   name="testPathLocations" optional="true"/>
-	    <attribute name="forkmode"			default="once"/>
-	    <sequential>
-	        <junit printsummary="withOutAndErr"
-	    	       haltonfailure="@{haltOnFailure}"
-	    		   haltonerror="@{haltOnError}"
-	    		   failureproperty="testsfailed"
-	    	       showoutput="true"
-	    	       fork="true"
-	           	   forkmode="@{forkmode}"
-	        	   timeout="1200000"
-	    	>
-	            <sysproperty key="java.library.path"      		 value="${@{nativePathRefId}}"/>
-	        	<sysproperty key="jna.library.path"              value="${@{nativePathRefId}}"/>
-	    		<sysproperty key="junit.test.method"      		 value="${method}"/>
-	    		<sysproperty key="junit.test.times"        		 value="${times}"/>
-	    	    <sysproperty key="junit.test.hidetestname"		 value="${hidetestname}"/>
-	            <sysproperty key="junit.test.ignoreErrorService" value="${ignoreErrorService}"/>
-	            <jvmarg value="-Xmx512M"/>
-	        	<jvmarg value="-ea"/>
-	    		
-	    		<classpath refid="tests.limewire.components.this.classpath"/>
-	    		
-	    		<formatter type="xml"/>
-	    		<formatter type="plain" usefile="${tests.writetofileonly}"/>
-	    		
-	    		<batchtest todir="${tests.limewire.components.this.xml}">
-	    			<fileset dir="${build.limewire.components.this.tests}" includes="@{unit}" excludes="@{exclude}" />
-	    		    <testPathLocations/>
-	    		</batchtest>
-			</junit>
-		</sequential>
-	</macrodef>
-	
-    <macrodef name="do.tests2html" description="Converts test XML output to HTML reports.">        
-        <element name="more-xml-locations" optional="true"/>
-        <attribute name="dir" default="${tests.limewire.components.this.xml}"/>
-        <attribute name="include" default="TEST-*.xml"/>
-        <attribute name="exclude" default=""/>
-        <sequential>
-	        <junitreport todir="${tests.limewire.components.this.xml}\..">
-	        	<fileset dir="@{dir}">
-				    <include name="@{include}"/>
-                    <exclude name="@{exclude}"/>
-				</fileset>
-	            <more-xml-locations/>
-	        	<report format="frames" todir="${tests.limewire.components.this.html}"/>
-	       </junitreport>
+                 <more-javadoc-elements/>
+                <bottom><![CDATA[Copyright &#169; 2009 <a href="http://www.limewire.org">Lime Wire LLC</a>. All Rights Reserved.]]></bottom>                
+            </javadoc>
         </sequential>
     </macrodef>
-	
-	<macrodef name="do.build-init" description="Initializes directories for building the code.">	    
-	    <sequential>
-	    	<mkdir dir="${build.limewire.components.this.home}" />
-	    </sequential>
-	</macrodef>
     
-    <macrodef name="do.dist-init" description="Initializes directories for distribution.">    	
-    	<sequential>
-    	    <mkdir dir="${dist.limewire.components.this.home}"/>
-    	    <mkdir dir="${dist.limewire.components.this.src.jar.dir}"/>
-    	    <mkdir dir="${dist.limewire.components.this.test-common.jar.dir}"/>
-    	</sequential>
+    <macrodef name="do.build-init" description="Initializes directories for building the code.">        
+        <sequential>
+            <mkdir dir="${build.limewire.components.this.home}" />
+        </sequential>
     </macrodef>
-	
-	<macrodef name="do.tests-init" description="Initializes directories for running tests.">	    
-	    <sequential>
-			<mkdir dir="${tests.limewire.components.this.home}" />
-			<mkdir dir="${tests.limewire.components.this.html}" />
-			<mkdir dir="${tests.limewire.components.this.xml}" />
-	    </sequential>
-	</macrodef>
-	
-	<macrodef name="do.clean-build" description="Cleans all data related to building the code.">	    
-		<sequential>
-			<delete dir="${build.limewire.components.this.home}" />
-		</sequential>
-	</macrodef>
+    
+    <macrodef name="do.dist-init" description="Initializes directories for distribution.">        
+        <sequential>
+            <mkdir dir="${dist.limewire.components.this.home}"/>
+            <mkdir dir="${dist.limewire.components.this.src.jar.dir}"/>
+        </sequential>
+    </macrodef>
+    
+    <macrodef name="do.clean-build" description="Cleans all data related to building the code.">        
+        <sequential>
+            <delete dir="${build.limewire.components.this.home}" />
+        </sequential>
+    </macrodef>
         
     <macrodef name="do.clean-dist" description="Cleans all distribution files and directories.">        
         <sequential>
-        	<delete dir="${dist.limewire.components.this.home}"/>
+            <delete dir="${dist.limewire.components.this.home}"/>
         </sequential>
     </macrodef>
     
-    <macrodef name="do.clean-clover" description="Erases clover data.">    	
-        <sequential>
-            <delete dir="${clover.limewire.components.this.home}"/>
-        </sequential>
-    </macrodef>
-    
-    <macrodef name="do.clover-setup" description="Sets up clover.">    	
-        <element name="locations" optional="true"/>
-        <attribute name="defaultfileset" default="${limewire.components.this.home}"/>
-        <attribute name="clover.db.location" default="${clover.limewire.components.this.db}"/>        
-        <sequential>
-	        <antcall target="clover-guard"/>
-            <taskdef resource="cloverlib.xml"/>
-            <mkdir dir="${clover.limewire.components.this.home}"/>
-            <clover-setup initstring="@{clover.db.location}">
-                <statementContext name="log" regexp="^LOG\..*"/>
-                <statementContext name="iflog" regexp="^if *\(LOG\.is.*"/> 
-                <methodContext name="main" regexp="public static void main\(String args\[\]\).*"/>
-                <fileset dir="@{defaultfileset}" includes="**/*.java"/>
-                <locations/>
-            </clover-setup>
-        </sequential>
-    </macrodef>
-    
-    <macrodef name="do.clover2html">        
-        <element name="moretestinfo" optional="true"/>
-        <attribute name="defaulttestresults" default="${tests.limewire.components.this.xml}"/>
-        <attribute name="defaulttestsources" default="${limewire.components.this.tests}"/>
-        <attribute name="defaulttestsourceincludes" default="**/*.java"/>        
-        <attribute name="clover.db.location" default="${clover.limewire.components.this.db}"/>  
-        <sequential>
-            <antcall target="clover-guard"/>
-            <tstamp>
-	            <format property="clover.time" pattern="EEE, MMM d, yyyy hh:mm a"/>
-            </tstamp>
-            <clover-report initstring="@{clover.db.location}">
-                <current outfile="${clover.limewire.components.this.html}"
-                		 title="LimeWire - ${clover.time}">
-	                <format type="html" filter="log,iflog,assert,main"/>
-                    <testresults dir="@{defaulttestresults}" includes="TEST-*.xml"/>
-                    <testsources dir="@{defaulttestsources}" includes="@{defaulttestsourceincludes}"/>
-                    <moretestinfo/>
-                </current>
-                <current outfile="${clover.limewire.components.this.xml}"
-                         title="LimeWire - ${clover.time}">
-					<format type="xml" filter="log,iflog,assert,main"/>
-                </current>
-            </clover-report>
-        </sequential>
-    </macrodef>
-	
 </project>

@@ -20,7 +20,5 @@
         <dependency org="none" name="guice-assistedinject" rev="${guice-assistedinject.version}" conf="compile,runtime"/>
         <dependency org="none" name="glazedlists" rev="${glazedlists.version}" conf="compile,runtime"/>
 	    <dependency org="none" name="google-collect" rev="${google-collect.version}" conf="compile,runtime"/>
-        
-        <dependency org="org.limewire" name="common" rev="latest.integration" conf="test"/>
     </dependencies>
 </ivy-module>

@@ -5,18 +5,15 @@
     </configurations>
     <publications>
         <artifact name="gnutella-core" conf="master"/>
-        <artifact name="gnutella-core-test-common" conf="test-common"/>
     </publications>
     <dependencies>
-        <dependency org="org.limewire" name="activation-api" rev="latest.integration" conf="compile,runtime"/>
-        <dependency org="org.limewire" name="activation" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="friend" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="common" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="collection" rev="latest.integration" conf="compile,runtime"/>
-        <dependency org="org.limewire" name="io" rev="latest.integration" conf="compile,runtime,test"/>
+        <dependency org="org.limewire" name="io" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="rudp" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="net" rev="latest.integration" conf="compile,runtime"/>
-        <dependency org="org.limewire" name="nio" rev="latest.integration" conf="compile,runtime,test"/>
+        <dependency org="org.limewire" name="nio" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="rudp" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="security" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="setting" rev="latest.integration" conf="compile,runtime"/>
@@ -30,7 +27,7 @@
         <dependency org="org.limewire" name="bittorrent-api" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="libtorrent" rev="latest.integration" conf="compile,runtime"/>
 
-		<dependency org="none" name="google-collect" rev="${google-collect.version}" conf="compile,runtime"/>        
+        <dependency org="none" name="google-collect" rev="${google-collect.version}" conf="compile,runtime"/>        
         <dependency org="none" name="clink" rev="${clink.version}" conf="compile,runtime"/>
         <dependency org="none" name="guice-assistedinject" rev="${guice-assistedinject.version}" conf="compile,runtime"/>
         <dependency org="none" name="jogg" rev="${jogg.version}" conf="compile,runtime"/>
@@ -49,15 +46,6 @@
         <dependency org="none" name="guice" rev="${guice.version}" conf="compile,runtime"/>
         <dependency org="none" name="jna" rev="${jna.version}" conf="compile,runtime"/>
         <dependency org="none" name="windows/jacob" rev="${jacob.version}" conf="compile,runtime"/> <!-- todo: scope to windows only -->
-        
-        <dependency org="org.limewire" name="common" rev="latest.integration" conf="test, test-common->master(*), test-common"/>
-        <dependency org="none" name="tests/commons-math" rev="${commons-math.version}" conf="test"/>
-        <dependency org="none" name="tests/org.mortbay.jetty" rev="${org.mortbay.jetty.version}" conf="test"/>
-        <dependency org="none" name="tests/javax.servlet" rev="${javax.servlet.version}" conf="test"/>
-        <dependency org="none" name="tests/manekineko" rev="${manekineko.version}" conf="test"/>
-        <dependency org="none" name="tests/saxpath" rev="${saxpath.version}" conf="test"/>
-        <dependency org="none" name="tests/xerces" rev="${xerces.version}" conf="test"/>
-        <dependency org="none" name="tests/jing" rev="${jing.version}" conf="test"/>
         
     </dependencies>
 </ivy-module>

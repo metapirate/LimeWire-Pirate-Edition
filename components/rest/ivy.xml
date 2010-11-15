@@ -21,8 +21,5 @@
         <dependency org="none" name="httpcore" rev="${httpcore.version}" conf="compile,runtime"/>
         <dependency org="none" name="httpcore-nio" rev="${httpcore-nio.version}" conf="compile,runtime"/>
         <dependency org="none" name="json" rev="${json.version}" conf="compile,runtime"/>
-
-        <!-- test dependencies -->
-        <dependency org="org.limewire" name="common" rev="latest.integration" conf="test"/>
     </dependencies>
 </ivy-module>

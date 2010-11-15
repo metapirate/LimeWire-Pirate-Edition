@@ -10,8 +10,5 @@
         <dependency org="org.limewire" name="common" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="none" name="guice" rev="${guice.version}" conf="compile,runtime" />
         <dependency org="org.limewire" name="nio" rev="latest.integration" conf="compile,runtime"/>
-            
-    	<!-- test dependencies. -->
-        <dependency org="org.limewire" name="common" rev="latest.integration" conf="test"/>
     </dependencies>
 </ivy-module>
