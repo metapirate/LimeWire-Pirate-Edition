@@ -19,7 +19,6 @@ import org.limewire.core.api.download.SaveLocationManager;
 import org.limewire.core.api.file.CategoryManager;
 import org.limewire.core.api.network.BandwidthCollector;
 import org.limewire.core.settings.LimeWireCoreSettingsModule;
-import org.limewire.geocode.LimewireGeocodeModule;
 import org.limewire.http.LimeWireHttpModule;
 import org.limewire.inject.AbstractModule;
 import org.limewire.inject.EagerSingleton;
@@ -202,7 +201,6 @@ public class LimeWireCoreModule extends AbstractModule {
         binder().install(new LimeWireIOModule());
         binder().install(new LimeWireMojitoModule());
         binder().install(new LimeWireSecurityCertificateModule());
-        binder().install(new LimewireGeocodeModule());        
         binder().install(new LimeWireSecurityModule());
         binder().install(new LimeWireBittorrentModule());
         binder().install(new LimeWireLibraryModule());
