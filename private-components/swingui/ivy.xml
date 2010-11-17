@@ -20,7 +20,6 @@
         <dependency org="org.limewire" name="xmpp-api" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="player-api" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="bittorrent-api" rev="latest.integration" conf="compile,runtime"/>
-        <dependency org="org.limewire" name="geocode" rev="latest.integration" conf="compile,runtime"/>
 
         <dependency org="none" name="compile/AppleJavaExtensions" rev="${AppleJavaExtensions.version}" conf="compile"/>
         <dependency org="none" name="fmj" rev="${fmj.version}" conf="compile,runtime"/>

@@ -20,7 +20,6 @@
         <dependency org="org.limewire" name="statistic" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="mojito" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="http" rev="latest.integration" conf="compile,runtime"/>
-        <dependency org="org.limewire" name="geocode" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="core-api" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="core-settings" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="xmpp-api" rev="latest.integration" conf="compile,runtime"/>

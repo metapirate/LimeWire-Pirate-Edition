@@ -7,7 +7,6 @@
         <artifact name="core-settings" conf="master"/>
     </publications>
     <dependencies>
-        <dependency org="org.limewire" name="geocode" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="libtorrent" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="setting" rev="latest.integration" conf="compile,runtime"/>
         <dependency org="org.limewire" name="common" rev="latest.integration" conf="compile,runtime"/>

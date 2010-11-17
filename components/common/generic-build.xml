@@ -221,7 +221,6 @@
                 <link href="http://www.limewire.org/nightly/modules/core-glue/api/"/>
                 <link href="http://www.limewire.org/nightly/modules/core-settings/api/"/>
                 <link href="http://www.limewire.org/nightly/modules/friend/api/"/>
-                <link href="http://www.limewire.org/nightly/modules/geocode/api/"/>
                 <link href="http://www.limewire.org/nightly/modules/gnutella-core/api/"/>
                 <link href="http://www.limewire.org/nightly/modules/http/api/"/>
                 <link href="http://www.limewire.org/nightly/modules/io/api/"/>
