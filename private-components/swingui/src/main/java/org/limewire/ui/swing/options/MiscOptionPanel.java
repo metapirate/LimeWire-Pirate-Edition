@@ -31,7 +31,6 @@ import org.limewire.ui.swing.components.NonNullJComboBox;
 import org.limewire.ui.swing.components.TextFieldClipboardControl;
 import org.limewire.ui.swing.friends.settings.FriendAccountConfiguration;
 import org.limewire.ui.swing.friends.settings.FriendAccountConfigurationManager;
-import org.limewire.ui.swing.search.resultpanel.LicenseWarningDownloadPreprocessor;
 import org.limewire.ui.swing.settings.QuestionsHandler;
 import org.limewire.ui.swing.settings.SwingUiSettings;
 import org.limewire.ui.swing.util.GuiUtils;
@@ -47,10 +46,6 @@ import com.google.inject.Provider;
  */
 public class MiscOptionPanel extends OptionPanel {
 
-    // backwards compatibility
-    private static final int SKIP_WARNING_VALUE = LicenseWarningDownloadPreprocessor.SKIP_WARNING_VALUE;
-    private static final int SHOW_WARNING_VALUE = LicenseWarningDownloadPreprocessor.SHOW_WARNING_VALUE;
-    
     private final Provider<FriendAccountConfigurationManager> accountManager;
 
     private NotificationsPanel notificationsPanel;
@@ -398,16 +393,10 @@ public class MiscOptionPanel extends OptionPanel {
     }
     
     private static void resetWarnings() {
-        int skipWarningSettingValue = getLicenseSettingValueFromCheckboxValue(true);
-        QuestionsHandler.SKIP_FIRST_DOWNLOAD_WARNING.setValue(skipWarningSettingValue);
         QuestionsHandler.WARN_TORRENT_SEED_MORE.revertToDefault();
         QuestionsHandler.CONFIRM_BLOCK_HOST.revertToDefault();
         SwingUiSettings.WARN_DOWNLOAD_DANGEROUS.revertToDefault();
         SwingUiSettings.WARN_DOWNLOAD_SCAN_FAILED.revertToDefault();
         SwingUiSettings.WARN_DOWNLOAD_THREAT_FOUND.revertToDefault();
-    }
-    
-    private static int getLicenseSettingValueFromCheckboxValue(boolean isSelected) {
-        return isSelected ? SHOW_WARNING_VALUE : SKIP_WARNING_VALUE;
     }
 }

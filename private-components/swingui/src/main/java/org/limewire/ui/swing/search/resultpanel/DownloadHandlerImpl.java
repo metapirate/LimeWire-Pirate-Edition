@@ -1,8 +1,6 @@
 package org.limewire.ui.swing.search.resultpanel;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.limewire.ui.swing.downloads.DownloadMediator;
 import org.limewire.ui.swing.library.LibraryMediator;
@@ -12,7 +10,6 @@ import org.limewire.ui.swing.search.model.VisualSearchResult;
 class DownloadHandlerImpl implements DownloadHandler {
     
     private final SearchResultsModel searchResultsModel;
-    private List<DownloadPreprocessor> downloadPreprocessors = new ArrayList<DownloadPreprocessor>();
     private LibraryMediator libraryMediator;
     private final DownloadMediator downloadMediator;
     
@@ -24,8 +21,6 @@ class DownloadHandlerImpl implements DownloadHandler {
         this.searchResultsModel = searchResultsModel;
         this.libraryMediator = libraryMediator;
         this.downloadMediator = downloadMediator;
-
-        this.downloadPreprocessors.add(new LicenseWarningDownloadPreprocessor());
     }
 
 
@@ -42,15 +37,6 @@ class DownloadHandlerImpl implements DownloadHandler {
         if (maybeNavigate(vsr)){
             //do not download if we navigate away
             return;
-        }
-
-        // execute the download preprocessors
-        for (DownloadPreprocessor preprocessor : downloadPreprocessors) {
-            boolean shouldDownload = preprocessor.execute(vsr);
-            if (!shouldDownload) {
-                // do not download!
-                return;
-            }
         }
 
         // Start download.
