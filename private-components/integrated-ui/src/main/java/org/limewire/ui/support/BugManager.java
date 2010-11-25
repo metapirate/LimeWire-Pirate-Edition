@@ -156,18 +156,6 @@ public final class BugManager {
             logBugLocally(info);
         }
 
-        // never ignore bugs or auto-send when developing.
-        if(!LimeWireUtils.isTestingVersion()) {
-            if(!BugSettings.REPORT_BUGS.getValue() ) {
-                return; // ignore.
-            }
-            
-            // If we have already sent information about this bug, leave.
-            if( !shouldInform(info) ) {
-               return; // ignore.
-            }
-        }
-        
         if (_dialogsShowing < MAX_DIALOGS ) {
             reviewBug(info, bug instanceof NotImplementedException);
         }
@@ -232,10 +220,7 @@ public final class BugManager {
             } else {
                 // Otherwise, we're using a different version than the last time.
                 // Unset 'discard all bugs'.
-                if(! BugSettings.REPORT_BUGS.getValue()) {
-                    BugSettings.REPORT_BUGS.setValue(true);
-                    BugSettings.SHOW_BUGS.setValue(true);
-                }
+            	BugSettings.SHOW_BUGS.setValue(true);
             }
         } catch(Throwable t) {
             // ignore errors from disk.
@@ -273,26 +258,8 @@ public final class BugManager {
     }
     
     /**
-     * Determines if the bug has already been reported enough.
-     * If it has, this returns false.  Otherwise (if the bug should
-     * be reported) this returns true.
-     */
-    private boolean shouldInform(LocalClientInfo info) {
-        long now = System.currentTimeMillis();
-        
-        // If we aren't allowed to report a bug, exit.
-        if( now < _nextAllowedTime )
-            return false;
-
-        Long allowed = BUG_TIMES.get(info.getParsedBug());
-        return allowed == null || now >= allowed.longValue();
-    }
-    
-    /**
      * Displays a message to the user informing them an internal error
-     * has occurred.  The user is asked to click 'send' to send the bug
-     * report to the servlet and has the option to review the bug
-     * before it is sent.
+     * has occurred.
      */
     private void reviewBug(final LocalClientInfo info, boolean notImplemented) {
         _dialogsShowing++;

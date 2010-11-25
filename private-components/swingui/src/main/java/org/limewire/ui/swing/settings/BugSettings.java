@@ -23,12 +23,6 @@ public class BugSettings extends LimeProps {
         FACTORY.createBooleanSetting("SHOW_BUGS", true);
 
     /**
-     * Setting for whether or not to report bugs.
-     */
-    public static final BooleanSetting REPORT_BUGS =
-        FACTORY.createBooleanSetting("REPORT_BUGS", true);
-        
-    /**
      * Setting for whether or not bugs should be logged locally.
      * Developers can easily change this if they wish to see all
      * bugs logged to disk for future review.

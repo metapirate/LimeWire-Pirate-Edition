@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
@@ -12,10 +11,6 @@ import javax.swing.JRadioButton;
 import net.miginfocom.swing.MigLayout;
 
 import org.limewire.setting.BooleanSetting;
-import org.limewire.ui.swing.options.actions.CancelDialogAction;
-import org.limewire.ui.swing.options.actions.DialogDisplayAction;
-import org.limewire.ui.swing.options.actions.OKDialogAction;
-import org.limewire.ui.swing.settings.BugSettings;
 import org.limewire.ui.swing.settings.StartupSettings;
 import org.limewire.ui.swing.settings.SwingUiSettings;
 import org.limewire.ui.swing.shell.LimeAssociationOption;
@@ -37,7 +32,6 @@ public class SystemOptionPanel extends OptionPanel {
     private final TrayNotifier trayNotifier;
     private final FileAssociationPanel fileAssociationPanel;
     private final StartupShutdownPanel startupShutdownPanel;
-    private final BugsAndUpdatesPanel bugsAndUpdatesPanel;
 
     @Inject
     public SystemOptionPanel(TrayNotifier trayNotifier) {
@@ -50,11 +44,8 @@ public class SystemOptionPanel extends OptionPanel {
         
         startupShutdownPanel = new StartupShutdownPanel();
         
-        bugsAndUpdatesPanel = new BugsAndUpdatesPanel();
-        
         add(fileAssociationPanel, "pushx, growx");
         add(startupShutdownPanel, "pushx, growx");
-        add(bugsAndUpdatesPanel, "pushx, growx");
     }
 
     @Override
@@ -62,24 +53,16 @@ public class SystemOptionPanel extends OptionPanel {
         super.setOptionTabItem(tab);
         getFileAssociationPanel().setOptionTabItem(tab);
         getStartupShutdownPanel().setOptionTabItem(tab);
-        getBugsAndUpdatesPanel().setOptionTabItem(tab);
     }
 
     private FileAssociationPanel getFileAssociationPanel() {
         return fileAssociationPanel;
     }
     
-
     private StartupShutdownPanel getStartupShutdownPanel() {
         return startupShutdownPanel;
     }
     
-
-    private BugsAndUpdatesPanel getBugsAndUpdatesPanel() {
-        return bugsAndUpdatesPanel;
-    }
-    
-
     @Override
     ApplyOptionResult applyOptions() {
         ApplyOptionResult result = null;
@@ -88,23 +71,18 @@ public class SystemOptionPanel extends OptionPanel {
         if (result.isSuccessful())
             result.applyResult(startupShutdownPanel.applyOptions());
         
-        if (result.isSuccessful())
-            result.applyResult(bugsAndUpdatesPanel.applyOptions());
-        
         return result;
     }
 
     @Override
     boolean hasChanged() {
-        return fileAssociationPanel.hasChanged() || startupShutdownPanel.hasChanged()
-                || bugsAndUpdatesPanel.hasChanged();
+        return fileAssociationPanel.hasChanged() || startupShutdownPanel.hasChanged();
     }
 
     @Override
     public void initOptions() {
         fileAssociationPanel.initOptions();
         startupShutdownPanel.initOptions();
-        bugsAndUpdatesPanel.initOptions();
     }
 
     private static class FileAssociationPanel extends OptionPanel {
@@ -300,99 +278,6 @@ public class SystemOptionPanel extends OptionPanel {
             runAtStartupCheckBox.setSelected(StartupSettings.RUN_ON_STARTUP.getValue());
             minimizeButton.setSelected(SwingUiSettings.MINIMIZE_TO_TRAY.getValue());
             exitButton.setSelected(!SwingUiSettings.MINIMIZE_TO_TRAY.getValue());
-        }
-    }
-
-    private static class BugsAndUpdatesPanel extends OptionPanel {
-        private final BugsPanel bugsPanel;
-
-        public BugsAndUpdatesPanel() {
-            super(I18n.tr("Bugs"));
-            bugsPanel = new BugsPanel();
-
-            add(new JButton(new DialogDisplayAction(this, bugsPanel, I18n.tr("Bug Reports"), 
-                    I18n.tr("Bug Reports..."), I18n.tr("Configure bug report settings."))), "wrap");
-        }
-
-        @Override
-        public ApplyOptionResult applyOptions() {
-            return bugsPanel.applyOptions();
-        }
-
-        @Override
-        public boolean hasChanged() {
-            return bugsPanel.hasChanged();
-        }
-
-        @Override
-        public void initOptions() {
-            bugsPanel.initOptions();
-        }
-    }
-
-    private static class BugsPanel extends OptionPanel {
-
-        private JRadioButton showBugsBeforeSendingButton;
-        private JRadioButton alwaysSendBugsButton;
-        private JRadioButton neverSendBugsButton;
-
-        public BugsPanel() {
-            setLayout(new MigLayout("fill"));
-            setOpaque(false);
-
-            showBugsBeforeSendingButton = new JRadioButton(I18n.tr("Let me know about bugs before sending them"));
-            showBugsBeforeSendingButton.setContentAreaFilled(false);
-            alwaysSendBugsButton = new JRadioButton(I18n.tr("Always send bugs to Lime Wire"));
-            alwaysSendBugsButton.setContentAreaFilled(false);
-            neverSendBugsButton = new JRadioButton(I18n.tr("Never send bugs to Lime Wire"));
-            neverSendBugsButton.setContentAreaFilled(false);
-
-            ButtonGroup bugsButtonGroup = new ButtonGroup();
-            bugsButtonGroup.add(showBugsBeforeSendingButton);
-            bugsButtonGroup.add(alwaysSendBugsButton);
-            bugsButtonGroup.add(neverSendBugsButton);
-            
-            add(showBugsBeforeSendingButton, "wrap");
-            add(alwaysSendBugsButton, "wrap");
-            add(neverSendBugsButton, "gapbottom 5, wrap");
-            add(new JButton(new OKDialogAction()), "tag ok, alignx right, split 2");
-            add(new JButton(new CancelDialogAction()), "tag cancel");
-        }
-
-        @Override
-        ApplyOptionResult applyOptions() {
-            if (showBugsBeforeSendingButton.isSelected()) {
-                BugSettings.SHOW_BUGS.setValue(true);
-                BugSettings.REPORT_BUGS.setValue(true);
-            } else if (alwaysSendBugsButton.isSelected()) {
-                BugSettings.SHOW_BUGS.setValue(false);
-                BugSettings.REPORT_BUGS.setValue(true);
-            } else {
-                BugSettings.SHOW_BUGS.setValue(false);
-                BugSettings.REPORT_BUGS.setValue(false);
-            }
-            return new ApplyOptionResult(false, true);
-        }
-
-        @Override
-        boolean hasChanged() {
-            return hasChanged(alwaysSendBugsButton, BugSettings.REPORT_BUGS)
-                    || hasChanged(showBugsBeforeSendingButton, BugSettings.SHOW_BUGS);
-        }
-
-        private boolean hasChanged(JRadioButton radioButton, BooleanSetting setting) {
-            return setting.getValue() != radioButton.isSelected();
-        }
-
-        @Override
-        public void initOptions() {
-            if (BugSettings.SHOW_BUGS.getValue()) {
-                showBugsBeforeSendingButton.setSelected(true);
-            } else if (BugSettings.REPORT_BUGS.getValue()) {
-                alwaysSendBugsButton.setSelected(true);
-            } else {
-                neverSendBugsButton.setSelected(true);
-            }
         }
     }
 }
